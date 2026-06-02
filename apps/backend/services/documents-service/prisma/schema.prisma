@@ -1,0 +1,36 @@
+// documents-service — schema 'documents' (schema-per-service)
+// Dueño de: documentos (versionado) y firmas.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["documents"]
+}
+
+model Document {
+  id           Int       @id @default(autoincrement())
+  contractId   Int // referencia lógica a contracts.Contract
+  name         String
+  fileUrl      String
+  version      Int       @default(1)
+  expiresAt    DateTime?
+  uploadedById Int // referencia lógica a auth.User
+  createdAt    DateTime  @default(now())
+
+  @@schema("documents")
+}
+
+model Signature {
+  id            Int      @id @default(autoincrement())
+  contractId    Int // referencia lógica a contracts.Contract
+  signedById    Int // referencia lógica a auth.User
+  signatureData String
+  signedAt      DateTime @default(now())
+
+  @@schema("documents")
+}

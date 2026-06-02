@@ -1,0 +1,41 @@
+{
+  "name": "aletheia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ALETHEIA — Sistema CLM (Contract Lifecycle Management). Microservicios NestJS + Microfrontends Next.js.",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "dev:core": "turbo dev --filter=@aletheia/gateway --filter=@aletheia/auth-service --filter=@aletheia/contracts-service --filter=@aletheia/workflow-service --filter=web-shell --filter=solicitudes-mf --filter=flujo-mf",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "db:generate": "turbo db:generate",
+    "infra:up": "docker compose -f infra/docker/compose/docker-compose.dev.yml up -d",
+    "infra:down": "docker compose -f infra/docker/compose/docker-compose.dev.yml down",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7",
+    "turbo": "^2.3.3"
+  },
+  "packageManager": "pnpm@10.8.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "@nestjs/core",
+      "@biomejs/biome",
+      "esbuild",
+      "sharp",
+      "@scarf/scarf"
+    ]
+  }
+}

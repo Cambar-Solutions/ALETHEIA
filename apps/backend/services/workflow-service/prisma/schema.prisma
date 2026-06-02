@@ -1,0 +1,69 @@
+// workflow-service — schema 'workflow' (schema-per-service)
+// Dueño de: etapas, estado del flujo, transiciones, notificaciones y bitácora.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["workflow"]
+}
+
+enum Role {
+  SOLICITANTE
+  ADMINISTRADOR
+  ABOGADO
+  APROBADOR
+  FIRMANTE
+
+  @@schema("workflow")
+}
+
+model WorkflowStage {
+  id           Int    @id @default(autoincrement())
+  name         String
+  order        Int
+  slaHours     Int    @default(48)
+  roleRequired Role
+
+  contractWorkflows ContractWorkflow[]
+
+  @@schema("workflow")
+}
+
+model ContractWorkflow {
+  id         Int      @id @default(autoincrement())
+  contractId Int      @unique // referencia lógica a contracts.Contract
+  stageId    Int
+  enteredAt  DateTime @default(now())
+  comment    String?
+
+  stage WorkflowStage @relation(fields: [stageId], references: [id])
+
+  @@schema("workflow")
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  userId     Int // referencia lógica a auth.User
+  contractId Int? // referencia lógica a contracts.Contract
+  message    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@schema("workflow")
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  contractId Int
+  userId     Int
+  action     String
+  detail     String?
+  createdAt  DateTime @default(now())
+
+  @@schema("workflow")
+}
