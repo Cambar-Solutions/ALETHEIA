@@ -5,23 +5,30 @@ import {
   Button,
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
+  DEFAULT_PAGE_SETUP,
+  DocumentPreview,
   Input,
+  type PageSetup,
+  PageSetupControl,
+  RichTextEditor,
   useRole,
 } from '@aletheia/frontend-commons';
-import { Power, PowerOff, Save } from 'lucide-react';
+import { Eye, EyeOff, Power, PowerOff, Save } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Label } from '../../../components/ui/label';
 import { NoAccess } from '../../../components/ui/no-access';
 import { PageHeader } from '../../../components/ui/page-header';
-import { RichTextEditor } from '../../../components/ui/rich-text-editor';
 import { Select } from '../../../components/ui/select';
 import { SOCIETIES } from '../../_mock/societies';
 import { useTemplates } from '../../_mock/useTemplates';
 
 const EMPTY_CONTENT = '<h2>Nueva plantilla</h2><p>Escribe aquí las cláusulas del contrato…</p>';
+const DEFAULT_HEADER = '<p style="text-align:center"><strong>ALETHEIA</strong></p>';
+const DEFAULT_FOOTER = '<p style="text-align:center">Documento confidencial · Página {{page}}</p>';
 
 function ActiveToggleButton({
   active,
@@ -52,12 +59,18 @@ interface TemplateFormProps {
   name: string;
   societyId: string;
   content: string;
+  header: string;
+  footer: string;
+  pageSetup: PageSetup;
   active: boolean;
   error: string | null;
   savedAt: string | null;
   onNameChange: (v: string) => void;
   onSocietyChange: (v: string) => void;
   onContentChange: (v: string) => void;
+  onHeaderChange: (v: string) => void;
+  onFooterChange: (v: string) => void;
+  onPageSetupChange: (v: PageSetup) => void;
   onSave: () => void;
 }
 
@@ -67,14 +80,22 @@ function TemplateForm(props: TemplateFormProps) {
     name,
     societyId,
     content,
+    header,
+    footer,
+    pageSetup,
     active,
     error,
     savedAt,
     onNameChange,
     onSocietyChange,
     onContentChange,
+    onHeaderChange,
+    onFooterChange,
+    onPageSetupChange,
     onSave,
   } = props;
+
+  const [showPreview, setShowPreview] = useState(false);
 
   return (
     <>
@@ -124,6 +145,39 @@ function TemplateForm(props: TemplateFormProps) {
 
       <Card>
         <CardHeader>
+          <CardTitle>Diseño de página</CardTitle>
+          <CardDescription>
+            Tamaño, márgenes, encabezado y pie. El pie admite el token{' '}
+            <code className="font-mono">{'{{page}}'}</code> para el número de página al imprimir.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <PageSetupControl value={pageSetup} onChange={onPageSetupChange} />
+          <div className="grid gap-5 lg:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label>Encabezado</Label>
+              <RichTextEditor
+                value={header}
+                onChange={onHeaderChange}
+                compact
+                ariaLabel="Encabezado de la plantilla"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Pie de página</Label>
+              <RichTextEditor
+                value={footer}
+                onChange={onFooterChange}
+                compact
+                ariaLabel="Pie de página de la plantilla"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Contenido</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -136,12 +190,28 @@ function TemplateForm(props: TemplateFormProps) {
             <Button onClick={onSave}>
               <Save className="h-4 w-4" /> {isEdit ? 'Guardar cambios' : 'Crear plantilla'}
             </Button>
+            <Button variant="neutral" onClick={() => setShowPreview((v) => !v)}>
+              {showPreview ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPreview ? 'Ocultar vista previa' : 'Ver documento'}
+            </Button>
             {savedAt ? (
               <span className="font-mono text-xs text-foreground/50">Guardado a las {savedAt}</span>
             ) : null}
           </div>
         </CardContent>
       </Card>
+
+      {showPreview ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Vista previa del documento</CardTitle>
+            <CardDescription>Así se verá la plantilla impresa o en PDF.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DocumentPreview body={content} header={header} footer={footer} pageSetup={pageSetup} />
+          </CardContent>
+        </Card>
+      ) : null}
     </>
   );
 }
@@ -160,6 +230,9 @@ export function TemplateEditorView({ templateId }: TemplateEditorViewProps) {
   const [name, setName] = useState('');
   const [societyId, setSocietyId] = useState<string>('');
   const [content, setContent] = useState<string>(EMPTY_CONTENT);
+  const [header, setHeader] = useState<string>(DEFAULT_HEADER);
+  const [footer, setFooter] = useState<string>(DEFAULT_FOOTER);
+  const [pageSetup, setPageSetup] = useState<PageSetup>(DEFAULT_PAGE_SETUP);
   const [active, setActive] = useState(true);
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -173,6 +246,9 @@ export function TemplateEditorView({ templateId }: TemplateEditorViewProps) {
       setName(tpl.name);
       setSocietyId(tpl.societyId ?? '');
       setContent(tpl.content);
+      setHeader(tpl.header);
+      setFooter(tpl.footer);
+      setPageSetup(tpl.pageSetup);
       setActive(tpl.active);
     }
     loadedRef.current = true;
@@ -194,6 +270,9 @@ export function TemplateEditorView({ templateId }: TemplateEditorViewProps) {
       name,
       societyId: societyId || null,
       content,
+      header,
+      footer,
+      pageSetup,
       active,
     };
     if (isEdit && templateId) {
@@ -243,12 +322,18 @@ export function TemplateEditorView({ templateId }: TemplateEditorViewProps) {
             name={name}
             societyId={societyId}
             content={content}
+            header={header}
+            footer={footer}
+            pageSetup={pageSetup}
             active={active}
             error={error}
             savedAt={savedAt}
             onNameChange={setName}
             onSocietyChange={setSocietyId}
             onContentChange={setContent}
+            onHeaderChange={setHeader}
+            onFooterChange={setFooter}
+            onPageSetupChange={setPageSetup}
             onSave={handleSave}
           />
         )}

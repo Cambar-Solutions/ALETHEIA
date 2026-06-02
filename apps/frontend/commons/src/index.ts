@@ -2,6 +2,7 @@
 
 // Utilidades
 export * from './utils/cn';
+export * from './utils/sanitize';
 
 // RBAC compartido (roles, privilegios, hook por cookie, guard)
 export * from './auth/roles';
@@ -17,3 +18,8 @@ export * from './ui/checkbox';
 export * from './ui/table';
 export * from './ui/dropdown-menu';
 export { default as ContractDataTable } from './ui/data-table';
+
+// Editor de texto enriquecido + diseño de documento (plantillas / contratos)
+export * from './ui/rich-text-editor';
+export * from './ui/page-setup';
+export * from './ui/document-preview';

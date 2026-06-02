@@ -1,5 +1,6 @@
 'use client';
 
+import { DEFAULT_PAGE_SETUP, type PageSetup } from '@aletheia/frontend-commons';
 import { useCallback, useEffect, useState } from 'react';
 import { type Template, generateId, readTemplates, writeTemplates } from './templates';
 
@@ -8,6 +9,9 @@ export interface TemplateInput {
   societyId: string | null;
   content: string;
   active?: boolean;
+  header?: string;
+  footer?: string;
+  pageSetup?: PageSetup;
 }
 
 /**
@@ -41,6 +45,9 @@ export function useTemplates() {
         name: input.name.trim(),
         societyId: input.societyId,
         content: input.content,
+        header: input.header ?? '',
+        footer: input.footer ?? '',
+        pageSetup: input.pageSetup ?? DEFAULT_PAGE_SETUP,
         active: input.active ?? true,
         createdAt: ts,
         updatedAt: ts,
@@ -58,6 +65,9 @@ export function useTemplates() {
       if ('societyId' in input) patch.societyId = input.societyId ?? null;
       if (input.content !== undefined) patch.content = input.content;
       if (input.active !== undefined) patch.active = input.active;
+      if (input.header !== undefined) patch.header = input.header;
+      if (input.footer !== undefined) patch.footer = input.footer;
+      if (input.pageSetup !== undefined) patch.pageSetup = input.pageSetup;
 
       let updated: Template | null = null;
       const next = templates.map((t) => {

@@ -8,15 +8,18 @@
     "dev": "nest start --watch",
     "lint": "biome check src",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev"
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@aletheia/backend-commons": "workspace:*",
+    "@nestjs/bullmq": "^11.0.0",
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/microservices": "^11.0.0",
     "@prisma/client": "^6.1.0",
+    "bullmq": "^5.34.0",
     "ioredis": "^5.4.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

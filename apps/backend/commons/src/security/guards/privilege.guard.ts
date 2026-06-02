@@ -1,5 +1,5 @@
 import { type CanActivate, type ExecutionContext, Injectable } from '@nestjs/common';
-import type { Reflector } from '@nestjs/core';
+import { Reflector } from '@nestjs/core';
 import { PRIVILEGE_KEY } from '../decorators/require-privilege.decorator';
 import type { UserContext } from '../interfaces/user-context.interface';
 

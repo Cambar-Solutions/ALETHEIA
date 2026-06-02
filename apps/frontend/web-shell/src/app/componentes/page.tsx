@@ -284,13 +284,12 @@ export default function ComponentesPage() {
               [Clock, 'Barlow Condensed + IBM Plex Mono'],
               [BarChart3, 'border-2 · shadow-shadow · rounded-base'],
             ] as const
-          )
-            .map(([Icon, text], i) => (
-              <div key={i} className="flex items-center gap-2">
-                <Icon className="w-4 h-4 text-main flex-shrink-0" />
-                <span className="text-background/70">{text}</span>
-              </div>
-            ))}
+          ).map(([Icon, text], i) => (
+            <div key={i} className="flex items-center gap-2">
+              <Icon className="w-4 h-4 text-main flex-shrink-0" />
+              <span className="text-background/70">{text}</span>
+            </div>
+          ))}
         </div>
       </div>
 

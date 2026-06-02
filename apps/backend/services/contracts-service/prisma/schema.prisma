@@ -1,5 +1,5 @@
 // contracts-service — schema 'contracts' (schema-per-service)
-// Dueño de: contratos y catálogos (sociedades, áreas, plantillas).
+// Dueño de: contratos y catálogos (sociedades, áreas, apoderados, plantillas).
 
 generator client {
   provider = "prisma-client-js"
@@ -55,10 +55,22 @@ model Area {
   @@schema("contracts")
 }
 
+// Apoderado legal (firmante con poder notarial). Las firmas viven en schema documents
+// y se referencian por apoderadoId String/Int (sin FK cross-schema).
+model Apoderado {
+  id         Int      @id @default(autoincrement())
+  name       String
+  legalPower String
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  @@schema("contracts")
+}
+
 model Template {
   id        Int      @id @default(autoincrement())
   name      String
-  content   String
+  content   String // HTML del editor WYSIWYG
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,14 +82,19 @@ model Template {
 
 model Contract {
   id           Int            @id @default(autoincrement())
+  folio        String         @unique // folio autogenerado, ej. CLM-2026-000123
   title        String
   vendorName   String
+  vendorEmail  String?
   providerType ProviderType
-  status       ContractStatus @default(DRAFT)
+  status       ContractStatus @default(DRAFT) // espejo del estado autoritativo de workflow
   areaId       Int
   societyId    Int
   templateId   Int?
   createdById  Int // referencia lógica a auth.User (sin FK cross-schema)
+  submittedAt  DateTime?
+  cancelReason String?
+  cancelledAt  DateTime?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 

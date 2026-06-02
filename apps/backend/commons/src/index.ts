@@ -1,6 +1,8 @@
 // Filtros e interceptores HTTP
 export * from './filters/http-exception.filter';
+export * from './filters/microservice-exception.filter';
 export * from './interceptors/transform.interceptor';
+export * from './interceptors/rpc-error.interceptor';
 
 // Seguridad (JWT, guards, decoradores)
 export * from './security/guards/jwt-auth.guard';
@@ -14,3 +16,4 @@ export * from './security/interfaces/user-context.interface';
 // Mensajería (Redis)
 export * from './messaging/patterns';
 export * from './messaging/redis';
+export * from './messaging/queues';

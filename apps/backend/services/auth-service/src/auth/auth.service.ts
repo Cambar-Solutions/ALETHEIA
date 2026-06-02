@@ -25,6 +25,7 @@ export class AuthService {
       email: user.email,
       roles: user.roles,
       privileges: user.privileges,
+      areaId: user.areaId,
     };
 
     const accessToken = this.jwt.sign(payload);
@@ -61,6 +62,7 @@ export class AuthService {
       email: payload.email,
       roles: payload.roles,
       privileges: payload.privileges,
+      areaId: payload.areaId,
     });
 
     return { accessToken };

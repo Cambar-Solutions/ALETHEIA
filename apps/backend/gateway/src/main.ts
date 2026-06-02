@@ -1,4 +1,8 @@
-import { HttpExceptionFilter, TransformInterceptor } from '@aletheia/backend-commons';
+import {
+  HttpExceptionFilter,
+  RpcErrorInterceptor,
+  TransformInterceptor,
+} from '@aletheia/backend-commons';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -13,6 +17,10 @@ async function bootstrap() {
       'http://localhost:4001',
       'http://localhost:4002',
       'http://localhost:4003',
+      'http://localhost:4004',
+      'http://localhost:4005',
+      'http://localhost:4006',
+      'http://localhost:4007',
     ],
     credentials: true,
   });
@@ -26,7 +34,7 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalInterceptors(new TransformInterceptor());
+  app.useGlobalInterceptors(new RpcErrorInterceptor(), new TransformInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('ALETHEIA CLM API')

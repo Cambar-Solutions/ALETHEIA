@@ -1,4 +1,4 @@
-import { redisTransportOptions } from '@aletheia/backend-commons';
+import { MicroserviceExceptionFilter, redisTransportOptions } from '@aletheia/backend-commons';
 import { NestFactory } from '@nestjs/core';
 import type { MicroserviceOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
@@ -8,6 +8,7 @@ async function bootstrap() {
     AppModule,
     redisTransportOptions(),
   );
+  app.useGlobalFilters(new MicroserviceExceptionFilter());
   await app.listen();
   console.log('🔐 auth-service escuchando vía Redis');
 }

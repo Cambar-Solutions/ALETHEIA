@@ -1,3 +1,5 @@
+import { QUEUES, bullConnection, defaultJobOptions } from '@aletheia/backend-commons';
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -8,6 +10,9 @@ import { SignaturesModule } from './signatures/signatures.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    BullModule.forRoot({ connection: bullConnection(), defaultJobOptions }),
+    // documents solo PRODUCE en WORKFLOW_INBOUND (no consume colas).
+    BullModule.registerQueue({ name: QUEUES.WORKFLOW_INBOUND }),
     PrismaModule,
     DocumentsModule,
     SignaturesModule,

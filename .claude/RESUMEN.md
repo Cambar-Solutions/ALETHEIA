@@ -129,9 +129,28 @@ ALETHEIA/
 ```powershell
 pnpm install
 pnpm infra:up      # postgres + redis (requiere Docker Desktop arrancado)
-pnpm dev           # todo (8 frontends + gateway + servicios)  ·  o  pnpm dev:core
-# web-shell: http://localhost:4000   ·   Swagger gateway: http://localhost:3000/api/docs
+pnpm dev           # TODO (8 frontends + gateway + 4 servicios)
+pnpm dev:fe        # SOLO los 8 frontends (host + 7 MFs)
+pnpm dev:core      # subset: gateway + auth/contracts/workflow + web-shell + solicitudes-mf + flujo-mf
 ```
+
+**Puertos del frontend** (Multi-Zones — se entra siempre por el host :4000, que reescribe a cada MF):
+
+| App | Puerto | Ruta vía host |
+|---|---|---|
+| web-shell (host) | 4000 | `/` |
+| solicitudes-mf | 4001 | `/solicitudes` |
+| contratos-mf | 4002 | `/contratos` |
+| documentos-mf | 4003 | `/documentos` |
+| flujo-mf | 4004 | `/flujo` |
+| firmas-mf | 4005 | `/firmas` |
+| reportes-mf | 4006 | `/reportes` |
+| admin-mf | 4007 | `/admin` |
+
+- **Entrar por:** http://localhost:4000 (login por rol, mock sin backend) · Swagger gateway: http://localhost:3000/api/docs
+- Cada MF devuelve **404 en su raíz a propósito**: se monta bajo su `basePath` (`/solicitudes`, `/admin`, …); el host lo reescribe.
+- ⚠️ **Windows**: `dev:fe` debe usar filtros explícitos por MF, **no** `--filter='*-mf'` — cmd.exe pasa las comillas simples literales y turbo solo levantaría `web-shell`.
+
 Usuario seed (cuando el backend esté en runtime): `admin@aletheia.com` / `password123`.
 
 ---
