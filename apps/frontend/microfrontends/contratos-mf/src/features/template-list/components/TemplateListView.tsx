@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Input,
+  PageHeader,
   Table,
   TableBody,
   TableCell,
@@ -18,7 +19,6 @@ import { Pencil, Plus, Power, PowerOff } from 'lucide-react';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { NoAccess } from '../../../components/ui/no-access';
-import { PageHeader } from '../../../components/ui/page-header';
 import { useListTemplatesQuery, useUpdateTemplateMutation } from '../../api/templatesApi';
 import { type Template, toUiTemplate } from '../../templates/types';
 
@@ -71,7 +71,7 @@ function TemplateTableRow({
 function EmptyRow({ message }: { message: string }) {
   return (
     <TableRow>
-      <TableCell colSpan={3} className="h-24 text-center font-sans text-foreground/40">
+      <TableCell colSpan={3} className="h-24 text-center font-sans text-muted-foreground">
         {message}
       </TableCell>
     </TableRow>
@@ -112,10 +112,12 @@ export function TemplateListView() {
   if (!canManage) return <NoAccess />;
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-5xl space-y-6">
         <PageHeader
           title="Plantillas"
+          backToHome
+          backLabel="Inicio"
           actions={
             <Link href="/plantillas/nueva">
               <Button>
@@ -134,7 +136,7 @@ export function TemplateListView() {
         <Card>
           <CardContent className="p-0">
             <div className="flex items-center gap-4 border-b-2 border-border px-4 py-3">
-              <span className="font-sans text-xs text-foreground/50 uppercase tracking-widest">
+              <span className="font-sans text-xs text-muted-foreground uppercase tracking-widest">
                 Buscar por nombre
               </span>
               <Input
@@ -144,7 +146,7 @@ export function TemplateListView() {
                 aria-label="Buscar plantillas por nombre"
                 className="w-72"
               />
-              <span className="ml-auto font-sans text-xs text-foreground/40">
+              <span className="ml-auto font-sans text-xs text-muted-foreground">
                 {filtered.length} plantilla(s)
               </span>
             </div>
@@ -178,7 +180,7 @@ export function TemplateListView() {
             </Table>
 
             <div className="border-t-2 border-border px-4 py-2">
-              <span className="font-sans text-xs text-foreground/40">
+              <span className="font-sans text-xs text-muted-foreground">
                 Las plantillas no se eliminan; solo se activan o desactivan (HU-18).
               </span>
             </div>

@@ -1,20 +1,20 @@
 'use client';
 
 import {
+  BackButton,
   Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  EmptyState,
   Table,
   TableBody,
   TableHead,
   TableHeader,
   TableRow,
 } from '@aletheia/frontend-commons';
-import Link from 'next/link';
 import { useCallback, useMemo, useState } from 'react';
-import { EmptyState } from '../../../components/EmptyState';
 import { PageShell } from '../../../components/PageShell';
 import { GaugeIcon } from '../../../components/ui/icons';
 import { errorMessage, useWorkflow } from '../../_shared/useWorkflow';
@@ -61,19 +61,31 @@ export function SlaDashboard() {
       }
     >
       {!wf.hydrated ? (
-        <EmptyState title="Cargando indicadores…" />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState title="Cargando indicadores…" />
+          </CardContent>
+        </Card>
       ) : wf.isError ? (
-        <EmptyState
-          icon={<GaugeIcon className="h-10 w-10" />}
-          title="No se pudieron cargar los indicadores"
-          description={errorMessage(wf.error)}
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<GaugeIcon className="h-10 w-10" />}
+              title="No se pudieron cargar los indicadores"
+              description={errorMessage(wf.error)}
+            />
+          </CardContent>
+        </Card>
       ) : rows.length === 0 ? (
-        <EmptyState
-          icon={<GaugeIcon className="h-10 w-10" />}
-          title="No hay contratos en revisión"
-          description="No existen contratos en etapas con SLA para mostrar."
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<GaugeIcon className="h-10 w-10" />}
+              title="No hay contratos en revisión"
+              description="No existen contratos en etapas con SLA para mostrar."
+            />
+          </CardContent>
+        </Card>
       ) : (
         <>
           <SlaSummary counts={counts} />
@@ -86,7 +98,7 @@ export function SlaDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <Table>
+              <Table className="min-w-[640px]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Folio</TableHead>
@@ -106,18 +118,14 @@ export function SlaDashboard() {
             </CardContent>
           </Card>
 
-          <p className="font-sans text-xs text-foreground/50">
+          <p className="font-sans text-xs text-muted-foreground">
             Verde: menos del 60% del SLA consumido · Amarillo: entre 60% y 100% · Rojo: SLA superado
             (100% o más). El color lo calcula el servicio de flujo según el tiempo en la etapa
             actual.
           </p>
 
           <div>
-            <Link href="/">
-              <Button variant="neutral" size="sm">
-                Ir al panel de revisión
-              </Button>
-            </Link>
+            <BackButton href="/" label="Ir al panel de revisión" />
           </div>
         </>
       )}

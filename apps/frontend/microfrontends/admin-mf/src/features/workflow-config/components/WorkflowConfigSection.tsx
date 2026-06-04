@@ -8,6 +8,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  EmptyState,
+  ErrorState,
+  LoadingState,
   ROLES,
   Table,
   TableBody,
@@ -18,7 +21,6 @@ import {
 } from '@aletheia/frontend-commons';
 import { ArrowDown, ArrowUp, Clock, Pencil, Plus, Workflow } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { EmptyState, ErrorState, LoadingState } from '../../../components/ui/states';
 import {
   type WorkflowStage,
   useCreateStageMutation,
@@ -123,7 +125,7 @@ export function WorkflowConfigSection() {
             }
           />
         ) : (
-          <Table>
+          <Table className="min-w-[640px]">
             <TableHeader>
               <TableRow>
                 <TableHead className="w-16">Orden</TableHead>

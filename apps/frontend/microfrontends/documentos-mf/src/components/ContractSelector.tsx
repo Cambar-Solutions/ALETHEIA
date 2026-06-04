@@ -1,7 +1,7 @@
 'use client';
 
+import { Select } from '@aletheia/frontend-commons';
 import type { ContractOption } from '../lib/adapter';
-import { Select } from './ui/select';
 
 interface ContractSelectorProps {
   value: number | '';
@@ -21,7 +21,10 @@ export function ContractSelector({
 }: ContractSelectorProps) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="font-sans text-xs uppercase tracking-wide text-foreground/60">
+      <label
+        htmlFor={id}
+        className="font-sans text-xs uppercase tracking-wide text-muted-foreground"
+      >
         Contrato
       </label>
       <Select

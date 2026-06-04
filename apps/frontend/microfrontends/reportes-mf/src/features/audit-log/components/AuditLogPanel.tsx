@@ -8,10 +8,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Select,
 } from '@aletheia/frontend-commons';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Select } from '../../../components/ui/select';
 import { statusMeta } from '../../../lib/contract-meta';
 import { useReportContractsQuery } from '../../contract-reports/api/reportsApi';
 import { useAuditLog } from '../hooks/useAuditLog';
@@ -24,7 +24,7 @@ export function AuditLogPanel() {
     data: contracts,
     isLoading: contractsLoading,
     isError: contractsError,
-  } = useReportContractsQuery();
+  } = useReportContractsQuery(undefined);
 
   const {
     entries,
@@ -57,7 +57,7 @@ export function AuditLogPanel() {
       </CardHeader>
       <CardContent className="space-y-6">
         <label htmlFor="audit-contract" className="flex max-w-xl flex-col gap-1.5">
-          <span className="font-heading text-xs uppercase tracking-widest text-foreground/60">
+          <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
             Contrato
           </span>
           <Select
@@ -83,18 +83,18 @@ export function AuditLogPanel() {
             <Badge variant={statusMeta(contract.status).variant}>
               {statusMeta(contract.status).label}
             </Badge>
-            <span className="ml-auto font-sans text-xs text-foreground/50">
+            <span className="ml-auto font-sans text-xs text-muted-foreground">
               {entries.length} {entries.length === 1 ? 'acción' : 'acciones'}
             </span>
           </div>
         )}
 
         {!contractId ? (
-          <div className="rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-foreground/60">
+          <div className="rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-muted-foreground">
             Selecciona un contrato para consultar su bitácora.
           </div>
         ) : entriesError ? (
-          <div className="flex flex-col items-center gap-3 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-foreground/60">
+          <div className="flex flex-col items-center gap-3 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-muted-foreground">
             <AlertTriangle className="h-6 w-6 text-destructive" />
             <span>No se pudo cargar la bitácora.</span>
             <Button variant="neutral" size="sm" onClick={() => refetch()}>
@@ -102,7 +102,7 @@ export function AuditLogPanel() {
             </Button>
           </div>
         ) : entriesLoading ? (
-          <div className="flex items-center justify-center gap-2 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 font-sans text-sm text-foreground/60">
+          <div className="flex items-center justify-center gap-2 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 font-sans text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" /> Cargando bitácora…
           </div>
         ) : (

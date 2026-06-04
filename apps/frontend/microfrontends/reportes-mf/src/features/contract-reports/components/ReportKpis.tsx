@@ -22,7 +22,7 @@ export function ReportKpis({ total, kpis }: ReportKpisProps) {
         <Card key={kpi.status}>
           <CardContent className="p-4">
             <div className="font-heading text-4xl leading-none">{kpi.count}</div>
-            <div className="mt-1 font-sans text-xs uppercase tracking-wider text-foreground/60">
+            <div className="mt-1 font-sans text-xs uppercase tracking-wider text-muted-foreground">
               {kpi.label}
             </div>
           </CardContent>

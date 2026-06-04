@@ -1,17 +1,17 @@
 'use client';
 
 import {
+  BackButton,
   Badge,
   Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  EmptyState,
 } from '@aletheia/frontend-commons';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { EmptyState } from '../../../components/EmptyState';
 import { PageShell } from '../../../components/PageShell';
 import { TimelineIcon } from '../../../components/ui/icons';
 import { providerTypeLabel } from '../../_shared/adapters';
@@ -47,19 +47,31 @@ export function WorkflowTimeline() {
       active="timeline"
     >
       {!wf.hydrated ? (
-        <EmptyState title="Cargando historial…" />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState title="Cargando historial…" />
+          </CardContent>
+        </Card>
       ) : wf.isError ? (
-        <EmptyState
-          icon={<TimelineIcon className="h-10 w-10" />}
-          title="No se pudieron cargar los contratos"
-          description={errorMessage(wf.error)}
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<TimelineIcon className="h-10 w-10" />}
+              title="No se pudieron cargar los contratos"
+              description={errorMessage(wf.error)}
+            />
+          </CardContent>
+        </Card>
       ) : wf.contracts.length === 0 ? (
-        <EmptyState
-          icon={<TimelineIcon className="h-10 w-10" />}
-          title="No hay contratos"
-          description="No existen contratos para mostrar su historial."
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<TimelineIcon className="h-10 w-10" />}
+              title="No hay contratos"
+              description="No existen contratos para mostrar su historial."
+            />
+          </CardContent>
+        </Card>
       ) : (
         <>
           <Card>
@@ -92,7 +104,7 @@ export function WorkflowTimeline() {
                   <div className="space-y-1">
                     <CardTitle className="text-xl">{contract.folio}</CardTitle>
                     <p className="font-sans text-sm text-foreground/80">{contract.provider}</p>
-                    <p className="font-sans text-xs text-foreground/50">
+                    <p className="font-sans text-xs text-muted-foreground">
                       {contract.society} · {contract.area} ·{' '}
                       {providerTypeLabel(contract.providerType)}
                     </p>
@@ -104,16 +116,16 @@ export function WorkflowTimeline() {
               </CardHeader>
               <CardContent>
                 {detail.isLoading ? (
-                  <p className="font-sans text-sm text-foreground/50">Cargando transiciones…</p>
+                  <p className="font-sans text-sm text-muted-foreground">Cargando transiciones…</p>
                 ) : detail.isError ? (
-                  <p className="font-sans text-sm text-[#dc2626]">{errorMessage(detail.error)}</p>
+                  <p className="font-sans text-sm text-destructive">{errorMessage(detail.error)}</p>
                 ) : transitions.length === 0 ? (
-                  <p className="font-sans text-sm text-foreground/50">
+                  <p className="font-sans text-sm text-muted-foreground">
                     Este contrato aún no tiene transiciones registradas.
                   </p>
                 ) : (
                   <>
-                    <p className="mb-6 font-sans text-xs text-foreground/50">
+                    <p className="mb-6 font-sans text-xs text-muted-foreground">
                       {transitions.length} transicion{transitions.length === 1 ? '' : 'es'} · orden
                       cronológico (más antigua arriba)
                     </p>
@@ -125,11 +137,7 @@ export function WorkflowTimeline() {
           ) : null}
 
           <div>
-            <Link href="/">
-              <Button variant="neutral" size="sm">
-                Volver al panel de revisión
-              </Button>
-            </Link>
+            <BackButton href="/" label="Volver al panel de revisión" />
           </div>
         </>
       )}

@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  BackButton,
   Badge,
   Button,
   Card,
@@ -18,15 +19,11 @@ export function ContratosView() {
   const { role, privileges } = useRole();
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-5xl space-y-6">
-        <header className="flex items-center justify-between">
+        <header className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-4xl font-heading">Contratos</h1>
-          <a href="/">
-            <Button variant="outline" size="sm">
-              &larr; Inicio
-            </Button>
-          </a>
+          <BackButton crossZone label="Inicio" />
         </header>
 
         <Card>
@@ -37,7 +34,7 @@ export function ContratosView() {
           <CardContent className="flex flex-wrap items-center gap-2 font-sans text-sm text-foreground/70">
             <span>Rol actual:</span>
             <Badge variant="default">{role ?? 'sin sesión'}</Badge>
-            <span className="text-foreground/40">· {privileges.length} privilegios activos</span>
+            <span className="text-muted-foreground">· {privileges.length} privilegios activos</span>
           </CardContent>
         </Card>
 

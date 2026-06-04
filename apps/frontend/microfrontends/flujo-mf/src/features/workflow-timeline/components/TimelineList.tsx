@@ -39,18 +39,18 @@ export function TimelineList({ transitions }: { transitions: WorkflowTransition[
           <div className="space-y-2 rounded-base border-2 border-border bg-background p-4 shadow-shadow">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <Badge variant={ACTION_BADGE[tr.action]}>{ACTION_LABELS[tr.action]}</Badge>
-              <span className="font-sans text-xs text-foreground/50">
+              <span className="font-sans text-xs text-muted-foreground">
                 {formatDateTime(tr.timestamp)}
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 font-sans text-sm">
               <Badge variant="outline">{STATUS_LABELS[tr.from]}</Badge>
-              <ArrowRightIcon className="h-4 w-4 text-foreground/60" />
+              <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
               <Badge variant="outline">{STATUS_LABELS[tr.to]}</Badge>
             </div>
 
-            <p className="font-sans text-xs text-foreground/60">
+            <p className="font-sans text-xs text-muted-foreground">
               Por <span className="text-foreground/90">{tr.performedBy}</span>
             </p>
 

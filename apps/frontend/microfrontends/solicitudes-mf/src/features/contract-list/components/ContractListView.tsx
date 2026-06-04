@@ -8,6 +8,7 @@ import {
   CardTitle,
   CookiePrivilegeGuard,
   Input,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -18,7 +19,6 @@ import {
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
-import { Select } from '../../../components/ui/select';
 import { adaptContracts } from '../../_shared/api/adapters';
 import {
   useCancelContractMutation,
@@ -46,7 +46,7 @@ import { ContractRowActions } from './ContractRowActions';
 export function ContractListView() {
   const router = useRouter();
 
-  const { data, isLoading, isError, refetch } = useListContractsQuery();
+  const { data, isLoading, isError, refetch } = useListContractsQuery(undefined);
   const { data: areas } = useListAreasQuery();
 
   const [submitContract] = useSubmitContractMutation();
@@ -94,7 +94,7 @@ export function ContractListView() {
   };
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-6xl space-y-6">
         <PageHeader
           title="Solicitudes"
@@ -176,8 +176,8 @@ export function ContractListView() {
             </div>
 
             {/* Table */}
-            <div className="overflow-hidden rounded-base border-2 border-border">
-              <Table>
+            <div className="overflow-x-auto rounded-base border-2 border-border">
+              <Table className="min-w-[640px]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Folio</TableHead>
@@ -194,7 +194,7 @@ export function ContractListView() {
                     <TableRow>
                       <TableCell
                         colSpan={7}
-                        className="h-24 text-center font-sans text-foreground/40"
+                        className="h-24 text-center font-sans text-muted-foreground"
                       >
                         Cargando…
                       </TableCell>
@@ -217,7 +217,7 @@ export function ContractListView() {
                     <TableRow>
                       <TableCell
                         colSpan={7}
-                        className="h-24 text-center font-sans text-foreground/40"
+                        className="h-24 text-center font-sans text-muted-foreground"
                       >
                         No tienes privilegios para ver contratos.
                       </TableCell>
@@ -226,7 +226,7 @@ export function ContractListView() {
                     <TableRow>
                       <TableCell
                         colSpan={7}
-                        className="h-24 text-center font-sans text-foreground/40"
+                        className="h-24 text-center font-sans text-muted-foreground"
                       >
                         Sin resultados.
                       </TableCell>
@@ -238,13 +238,13 @@ export function ContractListView() {
                         className="cursor-pointer"
                         onClick={() => goDetail(contract)}
                       >
-                        <TableCell className="text-xs text-foreground/60">
+                        <TableCell className="text-xs text-muted-foreground">
                           {contract.folio}
                         </TableCell>
                         <TableCell className="font-base">{contract.title}</TableCell>
                         <TableCell>
                           <span className="block">{contract.providerName}</span>
-                          <span className="block text-[11px] text-foreground/50">
+                          <span className="block text-[11px] text-muted-foreground">
                             {PROVIDER_TYPE_LABEL[contract.providerType]}
                           </span>
                         </TableCell>
@@ -275,7 +275,7 @@ export function ContractListView() {
               </Table>
             </div>
 
-            <p className="font-sans text-xs text-foreground/40">{rows.length} contrato(s)</p>
+            <p className="font-sans text-xs text-muted-foreground">{rows.length} contrato(s)</p>
           </CardContent>
         </Card>
       </div>

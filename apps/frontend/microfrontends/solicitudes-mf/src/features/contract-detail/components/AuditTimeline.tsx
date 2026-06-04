@@ -8,7 +8,7 @@ import { formatDateTime } from '../../_shared/lib/format';
 
 export function AuditTimeline({ entries }: { entries: AuditEntry[] }) {
   if (entries.length === 0) {
-    return <p className="font-sans text-sm text-foreground/50">Sin movimientos registrados.</p>;
+    return <p className="font-sans text-sm text-muted-foreground">Sin movimientos registrados.</p>;
   }
 
   return (
@@ -26,7 +26,7 @@ export function AuditTimeline({ entries }: { entries: AuditEntry[] }) {
             </span>
             <div className="-mt-0.5 space-y-0.5">
               <p className="font-base text-sm">{entry.action}</p>
-              <p className="font-sans text-xs text-foreground/50">
+              <p className="font-sans text-xs text-muted-foreground">
                 {entry.user} · {formatDateTime(entry.date)}
               </p>
               {entry.note && (

@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Button, useRole } from '@aletheia/frontend-commons';
+import { BackButton, Badge, useRole } from '@aletheia/frontend-commons';
 import type { ReactNode } from 'react';
 import { AppNav } from './AppNav';
 
@@ -19,24 +19,22 @@ export function PageShell({ title, subtitle, active, actions, children }: PageSh
   const { role } = useRole();
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-6xl space-y-6">
         <header className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-1">
             <h1 className="font-heading text-4xl">{title}</h1>
-            {subtitle ? <p className="font-sans text-sm text-foreground/60">{subtitle}</p> : null}
+            {subtitle ? (
+              <p className="font-sans text-sm text-muted-foreground">{subtitle}</p>
+            ) : null}
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 font-sans text-xs text-foreground/60">
+            <div className="flex items-center gap-2 font-sans text-xs text-muted-foreground">
               <span>Rol:</span>
               <Badge variant="default">{role ?? 'sin sesión'}</Badge>
             </div>
             {actions}
-            <a href="/">
-              <Button variant="outline" size="sm">
-                &larr; Inicio
-              </Button>
-            </a>
+            <BackButton crossZone label="Inicio" />
           </div>
         </header>
 

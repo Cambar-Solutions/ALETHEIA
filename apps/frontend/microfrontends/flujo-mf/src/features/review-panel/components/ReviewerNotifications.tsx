@@ -71,7 +71,7 @@ export function ReviewerNotifications() {
                 />
                 <div>
                   <p className="font-sans text-sm text-foreground/90">{n.message}</p>
-                  <p className="font-sans text-xs text-foreground/50">
+                  <p className="font-sans text-xs text-muted-foreground">
                     {formatDateTime(n.createdAt)}
                   </p>
                 </div>

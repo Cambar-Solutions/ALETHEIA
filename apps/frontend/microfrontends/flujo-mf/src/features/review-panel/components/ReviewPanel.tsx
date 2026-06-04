@@ -1,8 +1,7 @@
 'use client';
 
-import { Badge, Button, useRole } from '@aletheia/frontend-commons';
+import { Badge, Button, Card, CardContent, EmptyState, useRole } from '@aletheia/frontend-commons';
 import { useMemo, useState } from 'react';
-import { EmptyState } from '../../../components/EmptyState';
 import { PageShell } from '../../../components/PageShell';
 import { InboxIcon } from '../../../components/ui/icons';
 import type { WorkflowContract } from '../../_shared/adapters';
@@ -91,34 +90,54 @@ export function ReviewPanel() {
       ) : null}
 
       {!wf.hydrated ? (
-        <EmptyState title="Cargando contratos…" />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState title="Cargando contratos…" />
+          </CardContent>
+        </Card>
       ) : wf.isError ? (
-        <EmptyState
-          icon={<InboxIcon className="h-10 w-10" />}
-          title="No se pudieron cargar los contratos"
-          description={errorMessage(wf.error)}
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<InboxIcon className="h-10 w-10" />}
+              title="No se pudieron cargar los contratos"
+              description={errorMessage(wf.error)}
+            />
+          </CardContent>
+        </Card>
       ) : !hasReviewRole ? (
-        <EmptyState
-          icon={<InboxIcon className="h-10 w-10" />}
-          title="Tu rol no participa en la revisión"
-          description={`El rol ${role ?? 'actual'} no tiene una cola de revisión asignada. Los roles de revisión son Administrador, Abogado y Aprobador.`}
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<InboxIcon className="h-10 w-10" />}
+              title="Tu rol no participa en la revisión"
+              description={`El rol ${role ?? 'actual'} no tiene una cola de revisión asignada. Los roles de revisión son Administrador, Abogado y Aprobador.`}
+            />
+          </CardContent>
+        </Card>
       ) : !canReview ? (
-        <EmptyState
-          icon={<InboxIcon className="h-10 w-10" />}
-          title="Sin privilegio de revisión"
-          description={PRIVILEGE_NOT_GRANTED}
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<InboxIcon className="h-10 w-10" />}
+              title="Sin privilegio de revisión"
+              description={PRIVILEGE_NOT_GRANTED}
+            />
+          </CardContent>
+        </Card>
       ) : queue.length === 0 ? (
-        <EmptyState
-          icon={<InboxIcon className="h-10 w-10" />}
-          title="No hay contratos pendientes"
-          description="No tienes contratos esperando tu revisión en este momento."
-        />
+        <Card>
+          <CardContent className="pt-6">
+            <EmptyState
+              icon={<InboxIcon className="h-10 w-10" />}
+              title="No hay contratos pendientes"
+              description="No tienes contratos esperando tu revisión en este momento."
+            />
+          </CardContent>
+        </Card>
       ) : (
         <>
-          <div className="flex items-center gap-2 font-sans text-sm text-foreground/60">
+          <div className="flex items-center gap-2 font-sans text-sm text-muted-foreground">
             <Badge variant="default">{queue.length}</Badge>
             <span>contrato{queue.length === 1 ? '' : 's'} en tu cola</span>
           </div>

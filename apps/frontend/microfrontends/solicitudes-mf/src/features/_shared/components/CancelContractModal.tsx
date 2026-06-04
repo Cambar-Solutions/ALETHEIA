@@ -1,10 +1,8 @@
 'use client';
 
-import { Button } from '@aletheia/frontend-commons';
+import { Button, Modal, Textarea } from '@aletheia/frontend-commons';
 import * as React from 'react';
 import { Field } from '../../../components/ui/field';
-import { Modal } from '../../../components/ui/modal';
-import { Textarea } from '../../../components/ui/textarea';
 import type { Contract } from '../domain/contract';
 
 // Reusable cancel-with-reason modal. Confirm is disabled until a reason exists.

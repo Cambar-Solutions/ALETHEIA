@@ -78,7 +78,7 @@ export function ContractReportsPanel() {
           />
 
           {isError ? (
-            <div className="flex flex-col items-center gap-3 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-foreground/60">
+            <div className="flex flex-col items-center gap-3 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-muted-foreground">
               <AlertTriangle className="h-6 w-6 text-destructive" />
               <span>No se pudieron cargar los reportes.</span>
               <Button variant="neutral" size="sm" onClick={() => refetch()}>
@@ -86,7 +86,7 @@ export function ContractReportsPanel() {
               </Button>
             </div>
           ) : isLoading ? (
-            <div className="flex items-center justify-center gap-2 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 font-sans text-sm text-foreground/60">
+            <div className="flex items-center justify-center gap-2 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 font-sans text-sm text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" /> Cargando reportes…
             </div>
           ) : (

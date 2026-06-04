@@ -1,9 +1,7 @@
 'use client';
 
-import { Badge, Button, Checkbox, Input } from '@aletheia/frontend-commons';
+import { Badge, Button, Checkbox, Input, Label, Modal, Textarea } from '@aletheia/frontend-commons';
 import { useEffect, useState } from 'react';
-import { Label } from '../../../components/ui/label';
-import { Modal } from '../../../components/ui/modal';
 import type { Apoderado } from '../../admin/admin.api';
 
 export interface ApoderadoFormValues {
@@ -80,13 +78,12 @@ export function ApoderadoFormModal({
 
         <div className="space-y-1.5">
           <Label htmlFor="apo-power">Descripción del poder legal</Label>
-          <textarea
+          <Textarea
             id="apo-power"
             value={legalPower}
             onChange={(e) => setLegalPower(e.target.value)}
             rows={3}
             placeholder="Ej. Poder general para actos de administración y dominio."
-            className="flex w-full rounded-base border-2 border-border bg-background px-3 py-2 text-sm font-sans shadow-shadow transition-all placeholder:font-sans placeholder:text-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
           />
         </div>
 

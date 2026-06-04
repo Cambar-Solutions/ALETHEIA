@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  BackButton,
   Badge,
   Button,
   Card,
@@ -49,19 +50,17 @@ export function SignatureDetailView({ contractId }: SignatureDetailViewProps) {
   const list = signatures ?? [];
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-3xl space-y-6">
         <header className="flex items-center justify-between">
           <h1 className="text-4xl font-heading">Detalle de firma</h1>
-          <Button variant="outline" size="sm" onClick={() => router.push('/')}>
-            &larr; Volver
-          </Button>
+          <BackButton crossZone label="Volver" />
         </header>
 
         {loading ? (
           <Card>
             <CardContent className="p-6">
-              <p className="font-sans text-sm text-foreground/50">Cargando…</p>
+              <p className="font-sans text-sm text-muted-foreground">Cargando…</p>
             </CardContent>
           </Card>
         ) : errorContract || !contract ? (

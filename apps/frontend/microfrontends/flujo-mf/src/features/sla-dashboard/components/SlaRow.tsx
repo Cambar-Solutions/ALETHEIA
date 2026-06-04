@@ -28,7 +28,7 @@ export function SlaRow({ contract, onLevel }: SlaRowProps) {
         <Link href={`/timeline?contract=${contract.id}`} className="font-heading hover:underline">
           {contract.folio}
         </Link>
-        <span className="block text-xs text-foreground/50">{contract.provider}</span>
+        <span className="block text-xs text-muted-foreground">{contract.provider}</span>
       </TableCell>
       <TableCell>
         <Badge variant="secondary">{STATUS_LABELS[contract.status]}</Badge>
@@ -41,14 +41,14 @@ export function SlaRow({ contract, onLevel }: SlaRowProps) {
         ) : isError ? (
           <Badge variant="destructive">SLA no disponible</Badge>
         ) : (
-          <span className="font-sans text-xs text-foreground/40">Calculando…</span>
+          <span className="font-sans text-xs text-muted-foreground">Calculando…</span>
         )}
       </TableCell>
       <TableCell className="text-right">
         {sla ? (
           <SlaBadge sla={sla} />
         ) : (
-          <span className="font-sans text-xs text-foreground/40">—</span>
+          <span className="font-sans text-xs text-muted-foreground">—</span>
         )}
       </TableCell>
     </TableRow>

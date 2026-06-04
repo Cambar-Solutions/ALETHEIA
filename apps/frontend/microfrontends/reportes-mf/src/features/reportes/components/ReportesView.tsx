@@ -1,15 +1,7 @@
 'use client';
 
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  useRole,
-} from '@aletheia/frontend-commons';
-import { FileBarChart, History, Lock } from 'lucide-react';
+import { BackButton, NoPermission, useRole } from '@aletheia/frontend-commons';
+import { FileBarChart, History } from 'lucide-react';
 import { useState } from 'react';
 import { type TabItem, Tabs } from '../../../components/ui/tabs';
 import { AuditLogPanel } from '../../audit-log/components/AuditLogPanel';
@@ -20,32 +12,6 @@ const TABS: TabItem[] = [
   { id: 'audit', label: 'Bitácora de auditoría', icon: <History /> },
 ];
 
-/** Shown when the active role lacks REPORTS_VIEW (gates the whole MF). */
-function NoPermission({ role }: { role: string | null }) {
-  return (
-    <Card className="mx-auto max-w-xl">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Lock className="h-5 w-5" /> Sin permiso
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3 font-sans text-sm text-foreground/70">
-        <div className="flex flex-wrap items-center gap-x-1 gap-y-2">
-          <span>Tu rol actual</span>
-          <Badge variant="secondary">{role ?? 'sin sesión'}</Badge>
-          <span>
-            no cuenta con el privilegio <span className="font-heading">REPORTS_VIEW</span> necesario
-            para consultar los reportes y la bitácora de auditoría.
-          </span>
-        </div>
-        <p className="text-foreground/50">
-          Contacta a un Administrador si necesitas acceso a este módulo.
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
-
 export function ReportesView() {
   const { role, can } = useRole();
   const [activeTab, setActiveTab] = useState<string>('reports');
@@ -53,24 +19,22 @@ export function ReportesView() {
   const allowed = can('REPORTS_VIEW');
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <header className="flex items-center justify-between">
+        <header className="flex items-center justify-between gap-4">
           <div>
             <h1 className="text-4xl font-heading">Reportes</h1>
-            <p className="mt-1 font-sans text-sm text-foreground/60">
+            <p className="mt-1 font-sans text-sm text-muted-foreground">
               Reportes de contratos e historial de auditoría
             </p>
           </div>
-          <a href="/">
-            <Button variant="outline" size="sm">
-              &larr; Inicio
-            </Button>
-          </a>
+          <BackButton crossZone label="Inicio" />
         </header>
 
         {!allowed ? (
-          <NoPermission role={role} />
+          <NoPermission
+            message={`Tu rol actual (${role ?? 'sin sesión'}) no cuenta con el privilegio REPORTS_VIEW necesario para consultar los reportes y la bitácora de auditoría. Contacta a un Administrador si necesitas acceso a este módulo.`}
+          />
         ) : (
           <>
             <Tabs tabs={TABS} active={activeTab} onChange={setActiveTab} />

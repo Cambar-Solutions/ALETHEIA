@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  BackButton,
   Badge,
   Button,
   Card,
@@ -9,11 +10,11 @@ import {
   CardHeader,
   CardTitle,
   CookiePrivilegeGuard,
+  Label,
+  Select,
 } from '@aletheia/frontend-commons';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Label } from '../../../components/ui/label';
-import { Select } from '../../../components/ui/select';
 import {
   useCreateSignatureMutation,
   useGetContractQuery,
@@ -69,13 +70,11 @@ export function SignatureCanvasView({ contractId }: SignatureCanvasViewProps) {
   };
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-3xl space-y-6">
         <header className="flex items-center justify-between">
           <h1 className="text-4xl font-heading">Canvas de firma</h1>
-          <Button variant="outline" size="sm" onClick={() => router.push('/')}>
-            &larr; Volver
-          </Button>
+          <BackButton crossZone label="Volver" />
         </header>
 
         <CookiePrivilegeGuard
@@ -91,7 +90,7 @@ export function SignatureCanvasView({ contractId }: SignatureCanvasViewProps) {
           {loadingContract ? (
             <Card>
               <CardContent className="p-6">
-                <p className="font-sans text-sm text-foreground/50">Cargando…</p>
+                <p className="font-sans text-sm text-muted-foreground">Cargando…</p>
               </CardContent>
             </Card>
           ) : errorContract || !contract ? (
@@ -144,7 +143,7 @@ export function SignatureCanvasView({ contractId }: SignatureCanvasViewProps) {
                     ))}
                   </Select>
                   {selectedApoderado ? (
-                    <p className="font-sans text-xs text-foreground/50">
+                    <p className="font-sans text-xs text-muted-foreground">
                       Poder legal: {selectedApoderado.legalPower}
                     </p>
                   ) : null}

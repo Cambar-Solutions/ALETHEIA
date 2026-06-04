@@ -25,15 +25,15 @@ const PROVIDER_LABELS: Record<Contract['providerType'], string> = {
 export function ContractsTable({ contracts }: ContractsTableProps) {
   if (contracts.length === 0) {
     return (
-      <div className="rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-foreground/60">
+      <div className="rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-muted-foreground">
         No hay contratos que coincidan con los filtros seleccionados.
       </div>
     );
   }
 
   return (
-    <div className="rounded-base border-2 border-border bg-background shadow-shadow">
-      <Table>
+    <div className="overflow-x-auto rounded-base border-2 border-border bg-background shadow-shadow">
+      <Table className="min-w-[640px]">
         <TableHeader>
           <TableRow>
             <TableHead>Folio</TableHead>

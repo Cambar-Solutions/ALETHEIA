@@ -1,9 +1,7 @@
 'use client';
 
-import { Badge, Button, Checkbox, Input } from '@aletheia/frontend-commons';
+import { Badge, Button, Checkbox, Input, Label, Modal } from '@aletheia/frontend-commons';
 import { useEffect, useState } from 'react';
-import { Label } from '../../../components/ui/label';
-import { Modal } from '../../../components/ui/modal';
 import type { Area } from '../../admin/admin.api';
 
 export interface AreaFormValues {
@@ -84,7 +82,7 @@ export function AreaFormModal({
                 Área activa
               </Label>
             </div>
-            <p className="text-xs font-sans text-foreground/50">
+            <p className="text-xs font-sans text-muted-foreground">
               Un área inactiva no puede asignarse a usuarios nuevos.
             </p>
           </>

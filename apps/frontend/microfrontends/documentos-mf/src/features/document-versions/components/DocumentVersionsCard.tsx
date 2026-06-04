@@ -65,7 +65,7 @@ export function DocumentVersionsCard({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Table>
+        <Table className="min-w-[640px]">
           <TableHeader>
             <TableRow>
               <TableHead>Versión</TableHead>

@@ -40,7 +40,7 @@ interface ActorArgs {
  * workflow detail (SLA color + transitions) is fetched with `useContractWorkflow`.
  */
 export function useWorkflow() {
-  const { data, isLoading, isFetching, isError, error, refetch } = useListContractsQuery();
+  const { data, isLoading, isFetching, isError, error, refetch } = useListContractsQuery(undefined);
 
   const [approveMutation, approveState] = useApproveWorkflowMutation();
   const [returnMutation, returnState] = useReturnWorkflowMutation();

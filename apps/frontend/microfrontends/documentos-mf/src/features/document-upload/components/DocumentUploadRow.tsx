@@ -51,7 +51,7 @@ export function DocumentUploadRow({
           </span>
           <div>
             <div className="font-heading text-base">{requirement.label}</div>
-            <div className="font-sans text-xs text-foreground/50">
+            <div className="font-sans text-xs text-muted-foreground">
               {requirement.tracksExpiry ? 'Requiere fecha de vigencia' : 'Sin vigencia'}
             </div>
           </div>
@@ -86,7 +86,7 @@ export function DocumentUploadRow({
           <div className="flex-1 space-y-1.5">
             <label
               htmlFor={`file-${requirement.key}`}
-              className="font-sans text-xs uppercase tracking-wide text-foreground/60"
+              className="font-sans text-xs uppercase tracking-wide text-muted-foreground"
             >
               Archivo
             </label>
@@ -103,7 +103,7 @@ export function DocumentUploadRow({
             <div className="space-y-1.5 sm:w-44">
               <label
                 htmlFor={`exp-${requirement.key}`}
-                className="font-sans text-xs uppercase tracking-wide text-foreground/60"
+                className="font-sans text-xs uppercase tracking-wide text-muted-foreground"
               >
                 Vigencia (opcional)
               </label>
@@ -124,7 +124,7 @@ export function DocumentUploadRow({
       )}
 
       {pendingFile && !isUploaded ? (
-        <div className="mt-2 font-sans text-xs text-foreground/50">
+        <div className="mt-2 font-sans text-xs text-muted-foreground">
           Seleccionado: {pendingFile.name} &middot; {formatBytes(pendingFile.size)}
         </div>
       ) : null}

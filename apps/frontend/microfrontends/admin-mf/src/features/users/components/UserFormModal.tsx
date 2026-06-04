@@ -1,10 +1,17 @@
 'use client';
 
-import { Badge, Button, Checkbox, Input, ROLES, type Role } from '@aletheia/frontend-commons';
+import {
+  Badge,
+  Button,
+  Checkbox,
+  Input,
+  Label,
+  Modal,
+  ROLES,
+  type Role,
+  Select,
+} from '@aletheia/frontend-commons';
 import { useEffect, useMemo, useState } from 'react';
-import { Label } from '../../../components/ui/label';
-import { Modal } from '../../../components/ui/modal';
-import { Select } from '../../../components/ui/select';
 import type { Area, User } from '../../admin/admin.api';
 
 export interface UserFormValues {
@@ -144,7 +151,9 @@ export function UserFormModal({
             disabled={Boolean(initial)}
           />
           {initial ? (
-            <p className="font-sans text-xs text-foreground/50">El correo no se puede modificar.</p>
+            <p className="font-sans text-xs text-muted-foreground">
+              El correo no se puede modificar.
+            </p>
           ) : null}
         </div>
 
@@ -164,7 +173,7 @@ export function UserFormModal({
         <div className="space-y-1.5">
           <Label htmlFor="user-area">Área</Label>
           {selectableAreas.length === 0 ? (
-            <p className="text-sm font-sans text-foreground/60">
+            <p className="text-sm font-sans text-muted-foreground">
               No hay áreas activas. Crea o activa un área primero.
             </p>
           ) : (
@@ -196,7 +205,7 @@ export function UserFormModal({
                 />
                 <span className="flex flex-col">
                   <span className="font-base text-sm">{r.label}</span>
-                  <span className="font-sans text-xs text-foreground/50">{r.description}</span>
+                  <span className="font-sans text-xs text-muted-foreground">{r.description}</span>
                 </span>
               </label>
             ))}

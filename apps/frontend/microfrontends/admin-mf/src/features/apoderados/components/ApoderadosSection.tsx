@@ -8,6 +8,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  EmptyState,
+  ErrorState,
+  LoadingState,
   Table,
   TableBody,
   TableCell,
@@ -17,7 +20,6 @@ import {
 } from '@aletheia/frontend-commons';
 import { Pencil, Plus, Scale } from 'lucide-react';
 import { useState } from 'react';
-import { EmptyState, ErrorState, LoadingState } from '../../../components/ui/states';
 import { Switch } from '../../../components/ui/switch';
 import {
   type Apoderado,

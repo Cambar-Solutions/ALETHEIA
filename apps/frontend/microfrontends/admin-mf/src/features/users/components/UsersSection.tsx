@@ -8,6 +8,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  ConfirmDialog,
+  EmptyState,
+  ErrorState,
+  LoadingState,
   ROLES,
   Table,
   TableBody,
@@ -18,8 +22,6 @@ import {
 } from '@aletheia/frontend-commons';
 import { Pencil, Plus, Trash2, Users as UsersIcon } from 'lucide-react';
 import { useState } from 'react';
-import { ConfirmDialog } from '../../../components/ui/confirm-dialog';
-import { EmptyState, ErrorState, LoadingState } from '../../../components/ui/states';
 import {
   type User,
   useCreateUserMutation,
@@ -140,7 +142,7 @@ export function UsersSection() {
             }
           />
         ) : (
-          <Table>
+          <Table className="min-w-[640px]">
             <TableHeader>
               <TableRow>
                 <TableHead>Nombre</TableHead>
@@ -157,7 +159,7 @@ export function UsersSection() {
                   <TableCell className="font-base">
                     {u.name} {u.lastName}
                   </TableCell>
-                  <TableCell className="text-foreground/70">{u.email}</TableCell>
+                  <TableCell className="text-muted-foreground">{u.email}</TableCell>
                   <TableCell>{areaName(u.areaId)}</TableCell>
                   <TableCell>
                     <span className="flex flex-wrap gap-1">

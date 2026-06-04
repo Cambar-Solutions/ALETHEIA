@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  BackButton,
   Button,
   Card,
   CardContent,
@@ -9,7 +10,7 @@ import {
   CardTitle,
   useRole,
 } from '@aletheia/frontend-commons';
-import { ArrowLeft, Pencil, RotateCcw, Send, XCircle } from 'lucide-react';
+import { Pencil, RotateCcw, Send, XCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { adaptAuditLog, adaptContract, adaptTransition } from '../../_shared/api/adapters';
@@ -41,7 +42,7 @@ import { AuditTimeline } from './AuditTimeline';
 function InfoRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 border-b-2 border-border/40 py-2 last:border-0 sm:flex-row sm:items-center sm:justify-between">
-      <span className="font-heading text-xs tracking-widest uppercase text-foreground/60">
+      <span className="font-heading text-xs tracking-widest uppercase text-muted-foreground">
         {label}
       </span>
       <span className="font-sans text-sm">{children}</span>
@@ -109,7 +110,7 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
 
   if (!validId || isError) {
     return (
-      <main className="bg-grid min-h-screen p-6">
+      <main className="bg-grid min-h-screen p-4 sm:p-6">
         <div className="mx-auto max-w-4xl space-y-6">
           <PageHeader title="Solicitud" />
           <Card>
@@ -123,9 +124,7 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
                     Reintentar
                   </Button>
                 )}
-                <Button variant="neutral" size="sm" onClick={() => router.push('/')}>
-                  <ArrowLeft className="h-4 w-4" /> Volver al listado
-                </Button>
+                <BackButton href="/" label="Volver al listado" />
               </div>
             </CardContent>
           </Card>
@@ -136,9 +135,9 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
 
   if (isLoading || !backendContract) {
     return (
-      <main className="bg-grid min-h-screen p-6">
+      <main className="bg-grid min-h-screen p-4 sm:p-6">
         <div className="mx-auto max-w-4xl">
-          <p className="font-sans text-sm text-foreground/40">Cargando…</p>
+          <p className="font-sans text-sm text-muted-foreground">Cargando…</p>
         </div>
       </main>
     );
@@ -171,26 +170,22 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
       : (auditLog ?? []).map(adaptAuditLog);
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-4xl space-y-6">
         <PageHeader
           title={contract.title}
           subtitle={contract.folio}
-          actions={
-            <Button variant="neutral" size="sm" onClick={() => router.push('/')}>
-              <ArrowLeft className="h-4 w-4" /> Volver
-            </Button>
-          }
+          actions={<BackButton href="/" />}
         />
 
         {/* Status + SLA strip */}
         <div className="flex flex-wrap items-center gap-3 rounded-base border-2 border-border bg-background px-4 py-3 shadow-shadow">
-          <span className="font-heading text-xs tracking-widest uppercase text-foreground/60">
+          <span className="font-heading text-xs tracking-widest uppercase text-muted-foreground">
             Estado
           </span>
           <StatusBadge status={contract.status} />
           <span className="mx-1 h-5 w-[2px] bg-border" aria-hidden />
-          <span className="font-heading text-xs tracking-widest uppercase text-foreground/60">
+          <span className="font-heading text-xs tracking-widest uppercase text-muted-foreground">
             SLA
           </span>
           <SlaIndicator level={sla} />

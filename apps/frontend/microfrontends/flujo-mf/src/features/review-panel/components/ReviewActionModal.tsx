@@ -1,9 +1,7 @@
 'use client';
 
-import { Badge, Button } from '@aletheia/frontend-commons';
+import { Badge, Button, Modal, Textarea } from '@aletheia/frontend-commons';
 import { useEffect, useState } from 'react';
-import { Modal } from '../../../components/ui/modal';
-import { Textarea } from '../../../components/ui/textarea';
 import type { WorkflowContract } from '../../_shared/adapters';
 import { STATUS_LABELS, approveLabel, nextStatusOnApprove } from '../../_shared/workflow-rules';
 
@@ -112,7 +110,7 @@ export function ReviewActionModal({
       }
     >
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2 font-sans text-xs text-foreground/60">
+        <div className="flex flex-wrap items-center gap-2 font-sans text-xs text-muted-foreground">
           <Badge variant="secondary">{STATUS_LABELS[contract.status]}</Badge>
           <span aria-hidden>→</span>
           <Badge variant={kind === 'approve' ? 'default' : 'destructive'}>
@@ -121,7 +119,7 @@ export function ReviewActionModal({
         </div>
 
         <label className="block space-y-1.5">
-          <span className="font-heading text-xs uppercase tracking-widest text-foreground/60">
+          <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
             Comentario {meta.commentRequired ? '(obligatorio)' : '(opcional)'}
           </span>
           <Textarea
@@ -137,11 +135,11 @@ export function ReviewActionModal({
         </label>
 
         {invalid && touched ? (
-          <p className="font-sans text-xs text-[#dc2626]">
+          <p className="font-sans text-xs text-destructive">
             Debes ingresar un comentario para continuar.
           </p>
         ) : (
-          <p className="font-sans text-xs text-foreground/50">{meta.hint}</p>
+          <p className="font-sans text-xs text-muted-foreground">{meta.hint}</p>
         )}
       </div>
     </Modal>

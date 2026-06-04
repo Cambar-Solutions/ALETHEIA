@@ -142,7 +142,7 @@ export function DocumentUploadView() {
           </CardHeader>
           <CardContent className="space-y-4">
             {contractsError ? (
-              <div className="flex flex-col items-center gap-3 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-foreground/60">
+              <div className="flex flex-col items-center gap-3 rounded-base border-2 border-dashed border-border bg-secondary-background/40 p-10 text-center font-sans text-sm text-muted-foreground">
                 <AlertIcon className="h-6 w-6 text-red-700" />
                 <span>No se pudieron cargar los contratos.</span>
                 <Button variant="neutral" size="sm" onClick={() => refetchContracts()}>
@@ -159,7 +159,7 @@ export function DocumentUploadView() {
                     disabled={contractsLoading}
                   />
                   <div className="space-y-1.5">
-                    <div className="font-sans text-xs uppercase tracking-wide text-foreground/60">
+                    <div className="font-sans text-xs uppercase tracking-wide text-muted-foreground">
                       Tipo de proveedor
                     </div>
                     <div className="flex h-10 items-center rounded-base border-2 border-border bg-secondary-background/40 px-3 font-sans text-sm">
@@ -189,7 +189,7 @@ export function DocumentUploadView() {
         ) : null}
 
         {contractsError ? null : !ready ? (
-          <p className="font-sans text-sm text-foreground/50">Cargando documentos…</p>
+          <p className="font-sans text-sm text-muted-foreground">Cargando documentos…</p>
         ) : (
           <div className="space-y-3">
             {requirements.map((req) => {

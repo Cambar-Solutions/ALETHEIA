@@ -1,10 +1,16 @@
 'use client';
 
-import { Badge, Button, Input, ROLES, type Role } from '@aletheia/frontend-commons';
+import {
+  Badge,
+  Button,
+  Input,
+  Label,
+  Modal,
+  ROLES,
+  type Role,
+  Select,
+} from '@aletheia/frontend-commons';
 import { useEffect, useState } from 'react';
-import { Label } from '../../../components/ui/label';
-import { Modal } from '../../../components/ui/modal';
-import { Select } from '../../../components/ui/select';
 import type { WorkflowStage } from '../../admin/admin.api';
 
 export interface StageFormValues {

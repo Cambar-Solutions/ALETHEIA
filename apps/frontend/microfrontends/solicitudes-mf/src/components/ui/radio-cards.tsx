@@ -59,7 +59,7 @@ export function RadioCards<T extends string>({
                 <span
                   className={cn(
                     'block font-sans text-[11px]',
-                    selected ? 'text-main-foreground/80' : 'text-foreground/50',
+                    selected ? 'text-main-foreground/80' : 'text-muted-foreground',
                   )}
                 >
                   {opt.hint}

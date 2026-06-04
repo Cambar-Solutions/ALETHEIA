@@ -10,17 +10,17 @@ import {
   CardTitle,
   DEFAULT_PAGE_SETUP,
   DocumentPreview,
+  PageHeader,
   type PageSetup,
   PageSetupControl,
   RichTextEditor,
+  Select,
   useRole,
 } from '@aletheia/frontend-commons';
 import { Eye, EyeOff, FileText, Save } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Label } from '../../../components/ui/label';
 import { NoAccess } from '../../../components/ui/no-access';
-import { PageHeader } from '../../../components/ui/page-header';
-import { Select } from '../../../components/ui/select';
 import { useListContractsQuery, useListTemplatesQuery } from '../../api/templatesApi';
 import { readContractDoc, writeContractDoc } from '../../catalogs/contract-drafts';
 import { type Template, toUiTemplate } from '../../templates/types';
@@ -118,9 +118,9 @@ export function ContractEditorView() {
   const noContracts = contractsReady && !isContractsError && contracts.length === 0;
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-5xl space-y-6">
-        <PageHeader title="Elaborar documento" backHref="/" backLabel="Inicio" />
+        <PageHeader title="Elaborar documento" backToHome backLabel="Inicio" />
 
         <Card>
           <CardHeader>
@@ -188,7 +188,7 @@ export function ContractEditorView() {
             </div>
 
             {contract ? (
-              <div className="flex flex-wrap items-center gap-2 font-sans text-xs text-foreground/60">
+              <div className="flex flex-wrap items-center gap-2 font-sans text-xs text-muted-foreground">
                 <span>Sociedad:</span>
                 <Badge variant="secondary">{contract.society?.name ?? 'Sin sociedad'}</Badge>
                 <span>· Proveedor:</span>
@@ -196,7 +196,7 @@ export function ContractEditorView() {
               </div>
             ) : null}
 
-            <p className="font-sans text-xs text-foreground/50">
+            <p className="font-sans text-xs text-muted-foreground">
               El documento elaborado es una previsualización/borrador local: se guarda solo en este
               navegador y aún no se persiste en el servidor.
             </p>
@@ -206,8 +206,8 @@ export function ContractEditorView() {
         {noContracts ? (
           <Card>
             <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-              <FileText className="h-8 w-8 text-foreground/40" />
-              <p className="font-sans text-sm text-foreground/50">
+              <FileText className="h-8 w-8 text-muted-foreground" />
+              <p className="font-sans text-sm text-muted-foreground">
                 No hay contratos disponibles para elaborar un documento.
               </p>
             </CardContent>
@@ -238,7 +238,7 @@ export function ContractEditorView() {
                     {showPreview ? 'Ocultar vista previa' : 'Ver documento'}
                   </Button>
                   {savedAt ? (
-                    <span className="font-sans text-xs text-foreground/50">
+                    <span className="font-sans text-xs text-muted-foreground">
                       Borrador local guardado a las {savedAt}
                     </span>
                   ) : null}
@@ -310,8 +310,8 @@ export function ContractEditorView() {
         ) : (
           <Card>
             <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-              <FileText className="h-8 w-8 text-foreground/40" />
-              <p className="font-sans text-sm text-foreground/50">
+              <FileText className="h-8 w-8 text-muted-foreground" />
+              <p className="font-sans text-sm text-muted-foreground">
                 Selecciona una plantilla para cargar el contenido inicial. Luego podrás editarlo
                 libremente.
               </p>

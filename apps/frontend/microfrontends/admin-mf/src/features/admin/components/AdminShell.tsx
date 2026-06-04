@@ -1,10 +1,16 @@
 'use client';
 
-import { Badge, Button, type Privilege, cn, useRole } from '@aletheia/frontend-commons';
+import {
+  BackButton,
+  Badge,
+  NoPermission,
+  type Privilege,
+  cn,
+  useRole,
+} from '@aletheia/frontend-commons';
 import { Building2, Scale, Users, Workflow } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useState } from 'react';
-import { NoPermission } from '../../../components/ui/states';
 import { ApoderadosSection } from '../../apoderados/components/ApoderadosSection';
 import { AreasSection } from '../../areas/components/AreasSection';
 import { UsersSection } from '../../users/components/UsersSection';
@@ -52,12 +58,12 @@ export function AdminShell() {
   const allowed = can(active.privilege);
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-5xl space-y-6">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-4xl font-heading">Administración</h1>
-            <p className="font-sans text-sm text-foreground/60">
+            <p className="font-sans text-sm text-muted-foreground">
               Configuración del sistema CLM (HU-20 a HU-23).
             </p>
           </div>
@@ -65,14 +71,10 @@ export function AdminShell() {
             <span className="flex items-center gap-2 font-sans text-sm text-foreground/70">
               <span>Rol:</span>
               <Badge variant="default">{role ?? 'sin sesión'}</Badge>
-              <span className="text-foreground/40">·</span>
-              <span className="text-foreground/50">{privileges.length} privilegios</span>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-muted-foreground">{privileges.length} privilegios</span>
             </span>
-            <a href="/">
-              <Button variant="outline" size="sm">
-                &larr; Inicio
-              </Button>
-            </a>
+            <BackButton crossZone label="Inicio" />
           </div>
         </header>
 

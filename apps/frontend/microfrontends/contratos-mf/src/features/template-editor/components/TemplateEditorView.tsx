@@ -11,6 +11,7 @@ import {
   DEFAULT_PAGE_SETUP,
   DocumentPreview,
   Input,
+  PageHeader,
   type PageSetup,
   PageSetupControl,
   RichTextEditor,
@@ -21,7 +22,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Label } from '../../../components/ui/label';
 import { NoAccess } from '../../../components/ui/no-access';
-import { PageHeader } from '../../../components/ui/page-header';
 import {
   useCreateTemplateMutation,
   useGetTemplateQuery,
@@ -178,7 +178,9 @@ function TemplateForm(props: TemplateFormProps) {
               {showPreview ? 'Ocultar vista previa' : 'Ver documento'}
             </Button>
             {savedAt ? (
-              <span className="font-sans text-xs text-foreground/50">Guardado a las {savedAt}</span>
+              <span className="font-sans text-xs text-muted-foreground">
+                Guardado a las {savedAt}
+              </span>
             ) : null}
           </div>
         </CardContent>
@@ -289,7 +291,7 @@ export function TemplateEditorView({ templateId }: TemplateEditorViewProps) {
   };
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-5xl space-y-6">
         <PageHeader
           title={isEdit ? 'Editar plantilla' : 'Nueva plantilla'}
@@ -308,19 +310,19 @@ export function TemplateEditorView({ templateId }: TemplateEditorViewProps) {
 
         {isLoadingTemplate ? (
           <Card>
-            <CardContent className="py-12 text-center font-sans text-foreground/60">
+            <CardContent className="py-12 text-center font-sans text-muted-foreground">
               Cargando plantilla…
             </CardContent>
           </Card>
         ) : notFound ? (
           <Card>
-            <CardContent className="py-12 text-center font-sans text-foreground/60">
+            <CardContent className="py-12 text-center font-sans text-muted-foreground">
               La plantilla solicitada no existe.
             </CardContent>
           </Card>
         ) : loadFailed ? (
           <Card>
-            <CardContent className="py-12 text-center font-sans text-foreground/60">
+            <CardContent className="py-12 text-center font-sans text-muted-foreground">
               No se pudo cargar la plantilla. Verifica tu conexión o tus permisos e intenta de
               nuevo.
             </CardContent>

@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  BackButton,
   Badge,
   Button,
   Card,
@@ -9,14 +10,13 @@ import {
   CardHeader,
   CardTitle,
   Input,
+  Select,
   useRole,
 } from '@aletheia/frontend-commons';
-import { ArrowLeft } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { Field } from '../../../components/ui/field';
 import { RadioCards } from '../../../components/ui/radio-cards';
-import { Select } from '../../../components/ui/select';
 import {
   useCreateContractMutation,
   useGetContractQuery,
@@ -140,7 +140,7 @@ export function CreateContractView() {
   // Permission / state guards ------------------------------------------------
   if (!can('CONTRACT_CREATE')) {
     return (
-      <main className="bg-grid min-h-screen p-6">
+      <main className="bg-grid min-h-screen p-4 sm:p-6">
         <div className="mx-auto max-w-2xl space-y-6">
           <PageHeader title="Nueva solicitud" />
           <Card>
@@ -155,9 +155,9 @@ export function CreateContractView() {
 
   if (isEdit && loadingExisting) {
     return (
-      <main className="bg-grid min-h-screen p-6">
+      <main className="bg-grid min-h-screen p-4 sm:p-6">
         <div className="mx-auto max-w-2xl">
-          <p className="font-sans text-sm text-foreground/40">Cargando…</p>
+          <p className="font-sans text-sm text-muted-foreground">Cargando…</p>
         </div>
       </main>
     );
@@ -165,7 +165,7 @@ export function CreateContractView() {
 
   if (isEdit && (errorExisting || !existing || existing.status !== 'DRAFT')) {
     return (
-      <main className="bg-grid min-h-screen p-6">
+      <main className="bg-grid min-h-screen p-4 sm:p-6">
         <div className="mx-auto max-w-2xl space-y-6">
           <PageHeader title="Editar solicitud" />
           <Card>
@@ -175,9 +175,7 @@ export function CreateContractView() {
                   ? 'Solo las solicitudes en estado Borrador pueden editarse.'
                   : 'Solicitud no encontrada.'}
               </p>
-              <Button variant="neutral" size="sm" onClick={() => router.push('/')}>
-                <ArrowLeft className="h-4 w-4" /> Volver al listado
-              </Button>
+              <BackButton href="/" label="Volver al listado" />
             </CardContent>
           </Card>
         </div>
@@ -186,16 +184,12 @@ export function CreateContractView() {
   }
 
   return (
-    <main className="bg-grid min-h-screen p-6">
+    <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-3xl space-y-6">
         <PageHeader
           title={isEdit ? 'Editar solicitud' : 'Nueva solicitud'}
           subtitle={isEdit ? existing?.folio : 'Folio generado automáticamente'}
-          actions={
-            <Button variant="neutral" size="sm" onClick={() => router.push('/')}>
-              <ArrowLeft className="h-4 w-4" /> Volver
-            </Button>
-          }
+          actions={<BackButton href="/" />}
         />
 
         <form onSubmit={handleSubmit} className="space-y-6">

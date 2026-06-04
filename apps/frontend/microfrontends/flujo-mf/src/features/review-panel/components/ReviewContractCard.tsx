@@ -63,19 +63,19 @@ export function ReviewContractCard({
       <CardContent className="flex flex-1 flex-col gap-4">
         <dl className="grid grid-cols-2 gap-x-4 gap-y-2 font-sans text-xs text-foreground/70">
           <div>
-            <dt className="text-foreground/40">Sociedad</dt>
+            <dt className="text-muted-foreground">Sociedad</dt>
             <dd>{contract.society}</dd>
           </div>
           <div>
-            <dt className="text-foreground/40">Área</dt>
+            <dt className="text-muted-foreground">Área</dt>
             <dd>{contract.area}</dd>
           </div>
           <div>
-            <dt className="text-foreground/40">Solicitante</dt>
+            <dt className="text-muted-foreground">Solicitante</dt>
             <dd>ID #{contract.createdById}</dd>
           </div>
           <div>
-            <dt className="text-foreground/40">Tipo</dt>
+            <dt className="text-muted-foreground">Tipo</dt>
             <dd>{providerTypeLabel(contract.providerType)}</dd>
           </div>
         </dl>
@@ -85,7 +85,7 @@ export function ReviewContractCard({
         ) : slaError ? (
           <Badge variant="destructive">SLA no disponible</Badge>
         ) : (
-          <p className="font-sans text-xs text-foreground/40">Calculando SLA…</p>
+          <p className="font-sans text-xs text-muted-foreground">Calculando SLA…</p>
         )}
 
         <div className="mt-auto flex flex-wrap items-center gap-2 border-t-2 border-border pt-4">
