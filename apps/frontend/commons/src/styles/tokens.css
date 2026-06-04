@@ -197,6 +197,21 @@
   background: #fde047;
   padding: 0 0.1em;
 }
+
+/* Variable de contrato ({{...}}) como píldora visual no editable. */
+.clm-variable {
+  display: inline-block;
+  background: color-mix(in srgb, var(--color-main) 16%, transparent);
+  color: var(--color-main);
+  border: 1px solid color-mix(in srgb, var(--color-main) 45%, transparent);
+  border-radius: 4px;
+  padding: 0 0.3em;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.4;
+}
 .prose-clm hr {
   border: none;
   border-top: 2px solid var(--color-border);

@@ -37,7 +37,14 @@ export function sanitizeDocumentHtml(html: string): string {
   if (typeof window === 'undefined' || !html) return '';
   ensureHook();
   return DOMPurify.sanitize(html, {
-    ADD_ATTR: ['target', 'colspan', 'rowspan'],
+    ADD_ATTR: [
+      'target',
+      'colspan',
+      'rowspan',
+      'data-variable',
+      'data-page-break',
+      'contenteditable',
+    ],
     ALLOWED_URI_REGEXP,
   });
 }
