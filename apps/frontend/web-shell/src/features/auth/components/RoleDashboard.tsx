@@ -2,6 +2,8 @@
 
 import { AppSidebar } from '@/components/AppSidebar';
 import { Badge } from '@aletheia/frontend-commons';
+import { Menu } from 'lucide-react';
+import { useState } from 'react';
 import { ROLES } from '../data/roles';
 import { useAuth } from '../hooks/useAuth';
 
@@ -70,11 +72,13 @@ const STATS = [
 /* ─── Component ──────────────────────────────────────────────────────── */
 export function RoleDashboard() {
   const { role, email, privileges, logout } = useAuth();
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const roleMeta = ROLES.find((r) => r.id === role);
   const roleName = roleMeta?.label ?? role;
 
+  const privilegeSet = privileges as readonly string[];
   const canAccess = (requires: readonly string[]) =>
-    requires.length === 0 || requires.some((p) => privileges.includes(p));
+    requires.length === 0 || requires.some((p) => privilegeSet.includes(p));
 
   const accessibleModules = MODULES.filter((m) => canAccess(m.requires));
 
@@ -82,37 +86,49 @@ export function RoleDashboard() {
     <div className="flex h-screen overflow-hidden bg-secondary-background">
       {/* Sidebar */}
       <AppSidebar
-        role={role}
-        email={email}
-        roleName={roleName}
+        role={role ?? ''}
+        email={email ?? ''}
+        roleName={roleName ?? ''}
         privileges={privileges}
         onLogout={logout}
+        mobileOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
       />
 
       {/* Main area */}
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex shrink-0 items-center justify-between border-b-2 border-border bg-background px-8 py-4">
-          <h1 className="font-heading text-xl leading-none tracking-tight">Panel de control</h1>
+        <header className="flex shrink-0 items-center justify-between gap-3 border-b-2 border-border bg-background px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <Badge variant="secondary">{roleName}</Badge>
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Abrir menú"
+              className="rounded-base border-2 border-border p-1.5 text-foreground shadow-sm hover:bg-secondary-background md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <h1 className="font-heading text-lg leading-none tracking-tight sm:text-xl">
+              Panel de control
+            </h1>
           </div>
+          <Badge variant="secondary">{roleName}</Badge>
         </header>
 
         {/* Scrollable content */}
         <main className="flex-1 overflow-y-auto">
-          <div className="px-8 py-8 space-y-8">
+          <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
             {/* Welcome */}
             <div className="border-b-2 border-border pb-6">
-              <h2 className="font-heading text-4xl leading-tight">
+              <h2 className="font-heading text-3xl leading-tight sm:text-4xl">
                 Bienvenido, <span style={{ color: '#15a8b5' }}>{roleName}</span>
               </h2>
-              {email && <p className="text-sm text-foreground/45 mt-1.5 font-sans">{email}</p>}
+              {email && <p className="mt-1.5 font-sans text-sm text-muted-foreground">{email}</p>}
             </div>
 
             {/* Stats */}
             <div>
-              <p className="text-xs font-heading uppercase tracking-[0.14em] text-foreground/35 mb-3">
+              <p className="mb-3 text-xs font-heading uppercase tracking-[0.14em] text-muted-foreground">
                 Resumen del sistema
               </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -121,23 +137,23 @@ export function RoleDashboard() {
                     key={stat.label}
                     className="border-2 border-border bg-background rounded-base p-5 shadow-shadow"
                   >
-                    <p className="font-heading text-4xl leading-none mb-2 text-foreground/20">
+                    <p className="mb-2 font-heading text-4xl leading-none text-foreground/25">
                       {stat.value}
                     </p>
-                    <p className="text-xs font-sans text-foreground/50 leading-snug">
+                    <p className="text-xs font-sans leading-snug text-muted-foreground">
                       {stat.label}
                     </p>
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-xs text-foreground/30 font-sans">
+              <p className="mt-2 font-sans text-xs text-muted-foreground">
                 Conecta el backend para ver estadísticas en tiempo real.
               </p>
             </div>
 
             {/* Module grid */}
             <div>
-              <p className="text-xs font-heading uppercase tracking-[0.14em] text-foreground/35 mb-3">
+              <p className="mb-3 text-xs font-heading uppercase tracking-[0.14em] text-muted-foreground">
                 Módulos disponibles para tu rol — {accessibleModules.length} de {MODULES.length}
               </p>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -153,16 +169,16 @@ export function RoleDashboard() {
                       style={{ background: '#15a8b5' }}
                     />
 
-                    <div className="flex items-start justify-between mb-2 pl-3">
+                    <div className="mb-2 flex items-start justify-between pl-3">
                       <span className="font-heading text-lg leading-tight">{mod.label}</span>
-                      <span className="text-foreground/25 group-hover:text-foreground/70 transition-colors text-lg leading-none ml-2">
+                      <span className="ml-2 text-lg leading-none text-foreground/30 transition-colors group-hover:text-accent">
                         →
                       </span>
                     </div>
-                    <p className="text-sm text-foreground/50 leading-snug pl-3">
+                    <p className="pl-3 text-sm leading-snug text-muted-foreground">
                       {mod.description}
                     </p>
-                    <p className="mt-3 text-xs text-foreground/25 font-sans pl-3">{mod.href}</p>
+                    <p className="mt-3 pl-3 font-sans text-xs text-foreground/40">{mod.href}</p>
                   </a>
                 ))}
 

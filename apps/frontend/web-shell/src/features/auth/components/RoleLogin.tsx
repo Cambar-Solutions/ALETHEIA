@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input } from '@aletheia/frontend-commons';
+import { Button, Input, Label, Logo } from '@aletheia/frontend-commons';
 import { type FormEvent, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
@@ -34,81 +34,80 @@ export function RoleLogin() {
   };
 
   return (
-    <main className="min-h-screen flex">
-      {/* ── Left brand panel ─────────────────────────────────────── */}
-      <div className="hidden lg:flex lg:w-[56%] flex-col justify-between bg-foreground text-background p-14 relative overflow-hidden select-none">
-        {/* Top teal accent stripe */}
-        <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: '#15a8b5' }} />
-
-        {/* Subtle dot-grid overlay */}
+    <main className="flex min-h-screen">
+      {/* ── Panel de marca (izquierda) ───────────────────────────── */}
+      <div className="relative hidden w-[52%] flex-col justify-between overflow-hidden bg-foreground p-12 text-background select-none lg:flex xl:p-16">
+        {/* Franja teal superior */}
+        <div className="absolute inset-x-0 top-0 h-1" style={{ background: '#15a8b5' }} />
+        {/* Acento coral inferior */}
+        <div className="absolute inset-x-0 bottom-0 h-1" style={{ background: '#fb6a55' }} />
+        {/* Patrón de puntos */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)',
+            backgroundSize: '26px 26px',
           }}
         />
 
-        {/* Logo */}
-        <div className="relative z-10 flex items-center gap-3">
-          <div
-            className="h-9 w-9 flex items-center justify-center border-2 font-heading text-base"
-            style={{ background: '#15a8b5', borderColor: 'rgba(255,255,255,0.15)', color: '#fff' }}
-          >
-            A
-          </div>
-          <span className="font-heading text-xl tracking-tight">ALETHEIA</span>
+        {/* Logo grande de la orca como protagonista */}
+        <div className="relative z-10">
+          {/* biome-ignore lint/a11y/useAltText: alt explícito */}
+          <img
+            src="/logo.png"
+            alt="ALETHEIA"
+            width={120}
+            height={120}
+            className="h-28 w-28 object-contain xl:h-32 xl:w-32"
+          />
         </div>
 
-        {/* Hero copy */}
         <div className="relative z-10">
           <h1
-            className="font-heading leading-[0.9] tracking-tight text-background mb-6"
-            style={{ fontSize: 'clamp(3.5rem, 5.5vw, 5.5rem)' }}
+            className="mb-6 font-heading leading-[0.9] tracking-tight text-background"
+            style={{ fontSize: 'clamp(3rem, 5vw, 5rem)' }}
           >
             LA VERDAD
             <br />
             DE CADA
             <br />
-            CONTRATO.
+            <span style={{ color: '#15a8b5' }}>CONTRATO.</span>
           </h1>
-          <p className="text-background/45 max-w-xs text-sm leading-relaxed">
-            Sistema integrado de gestión del ciclo de vida de contratos. Desde la solicitud hasta la
-            firma, con trazabilidad completa y control por roles.
+          <p className="max-w-sm text-base leading-relaxed text-background/55">
+            Gestión del ciclo de vida de contratos: de la solicitud a la firma, con trazabilidad
+            completa y control por roles.
           </p>
         </div>
 
-        {/* Footer meta */}
         <div className="relative z-10 border-t border-background/10 pt-6">
-          <p className="text-xs uppercase tracking-[0.15em] text-background/25 font-heading mb-2">
+          <p className="mb-2 font-heading text-xs uppercase tracking-[0.16em] text-background/30">
             Módulos del sistema
           </p>
-          <p className="text-xs text-background/35 leading-relaxed">
+          <p className="text-sm leading-relaxed text-background/40">
             Solicitudes · Contratos · Documentos · Flujo de trabajo · Firmas · Reportes ·
             Administración
           </p>
         </div>
       </div>
 
-      {/* ── Right form panel ─────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col items-center justify-center bg-secondary-background px-8 py-12">
-        <div className="w-full max-w-[360px]">
-          {/* Mobile-only brand */}
-          <div className="lg:hidden text-center mb-8">
-            <h1 className="font-heading text-4xl tracking-tight">ALETHEIA</h1>
-            <p className="text-foreground/50 text-sm mt-1">Contract Lifecycle Management</p>
+      {/* ── Panel del formulario (derecha) ───────────────────────── */}
+      <div className="flex flex-1 flex-col items-center justify-center bg-secondary-background px-6 py-12 sm:px-10">
+        <div className="w-full max-w-[400px]">
+          {/* Marca en móvil */}
+          <div className="mb-8 flex flex-col items-center gap-3 lg:hidden">
+            <Logo size={64} variant="mark" />
+            <span className="font-heading text-3xl tracking-tight">ALETHEIA</span>
           </div>
 
-          {/* Card */}
-          <div className="border-2 border-border bg-background rounded-base shadow-shadow">
-            <div className="px-7 pt-7 pb-4">
+          <div className="rounded-base border-2 border-border bg-background shadow-lg">
+            <div className="border-b-2 border-border px-7 py-6">
               <h2 className="font-heading text-2xl leading-none">Iniciar sesión</h2>
-              <p className="text-sm text-foreground/45 mt-1.5">
+              <p className="mt-1.5 text-sm text-muted-foreground">
                 Ingresa tus credenciales para acceder
               </p>
             </div>
 
-            <div className="px-7 pb-7">
+            <div className="px-7 py-6">
               <form
                 onSubmit={(e: FormEvent) => {
                   e.preventDefault();
@@ -117,9 +116,7 @@ export function RoleLogin() {
                 className="space-y-4"
               >
                 <div className="space-y-1.5">
-                  <label htmlFor="email" className="block text-sm text-foreground/65 font-sans">
-                    Correo electrónico
-                  </label>
+                  <Label htmlFor="email">Correo electrónico</Label>
                   <Input
                     id="email"
                     type="email"
@@ -132,9 +129,7 @@ export function RoleLogin() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="password" className="block text-sm text-foreground/65 font-sans">
-                    Contraseña
-                  </label>
+                  <Label htmlFor="password">Contraseña</Label>
                   <Input
                     id="password"
                     type="password"
@@ -147,21 +142,20 @@ export function RoleLogin() {
                 </div>
 
                 {error && (
-                  <div className="border-2 border-red-500 bg-red-50 rounded-base px-3 py-2.5">
-                    <p className="text-sm text-red-700">{error}</p>
+                  <div className="rounded-base border-2 border-destructive bg-destructive/10 px-3 py-2.5">
+                    <p className="text-sm text-destructive">{error}</p>
                   </div>
                 )}
 
-                <Button type="submit" className="w-full" size="lg" disabled={isLoggingIn}>
-                  {isLoggingIn ? 'Iniciando sesión…' : 'Entrar →'}
+                <Button type="submit" className="w-full" size="lg" isLoading={isLoggingIn}>
+                  Entrar
                 </Button>
               </form>
 
-              {/* Quick login */}
-              <div className="mt-6 pt-5 border-t-2 border-border">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-foreground/45 font-sans">Acceso rápido — demo</span>
-                  <code className="text-xs bg-secondary-background border-2 border-border px-2 py-0.5 rounded-base font-sans">
+              <div className="mt-6 border-t-2 border-border pt-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Acceso rápido — demo</span>
+                  <code className="rounded-base border-2 border-border bg-secondary-background px-2 py-0.5 text-xs">
                     password123
                   </code>
                 </div>
@@ -176,7 +170,7 @@ export function RoleLogin() {
                         setPassword(DEMO_PASSWORD);
                         submit(u.email, DEMO_PASSWORD);
                       }}
-                      className="text-xs font-sans px-3 py-1.5 border-2 border-border rounded-base bg-background shadow-[2px_2px_0_0_var(--color-shadow)] transition-all hover:bg-secondary-background hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] disabled:opacity-40 disabled:pointer-events-none"
+                      className="rounded-base border-2 border-border bg-background px-3 py-1.5 text-xs font-sans shadow-sm transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-secondary-background hover:shadow-none disabled:pointer-events-none disabled:opacity-40"
                     >
                       {u.label}
                     </button>

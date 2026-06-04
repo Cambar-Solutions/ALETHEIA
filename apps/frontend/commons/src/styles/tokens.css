@@ -4,18 +4,44 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* ─── Color Tokens ──────────────────────────────────── */
-  --color-main: #15a8b5;
+  /* ─── Marca ─────────────────────────────────────────── */
+  --color-main: #15a8b5; /* teal primario */
   --color-main-foreground: #ffffff;
-  --color-background: #ffffff;
-  --color-foreground: #000000;
-  --color-secondary-background: #e8e8e8;
-  --color-border: #000000;
-  --color-shadow: #000000;
+  --color-main-hover: #128c97; /* teal -10% para hover de acciones primarias */
 
-  /* ─── Shape ─────────────────────────────────────────── */
-  --radius-base: 5px;
-  --shadow-shadow: 4px 4px 0px 0px var(--color-shadow);
+  /* Acento secundario complementario (coral) — personalidad de marca.
+     Úsalo en acentos, highlights y elementos de marca; NO en estados. */
+  --color-accent: #fb6a55;
+  --color-accent-foreground: #ffffff;
+  --color-accent-hover: #ef5740;
+
+  /* ─── Superficie ────────────────────────────────────── */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a; /* casi-negro para texto principal */
+  --color-secondary-background: #f4f4f3; /* fill suave (cards alternas, hover) */
+  --color-muted: #ececeb; /* fill neutro (chips, skeleton) */
+  --color-muted-foreground: #5c5c5c; /* texto secundario — reemplaza foreground/50-60 */
+  --color-border: #0a0a0a; /* borde neobrutalist negro */
+  --color-border-muted: #d9d9d6; /* borde sutil para divisores internos */
+  --color-shadow: #0a0a0a;
+
+  /* ─── Estados semánticos (reservados para feedback/SLA) ─ */
+  --color-destructive: #e5484d;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #2f9e63;
+  --color-success-foreground: #ffffff;
+  --color-warning: #f5a623;
+  --color-warning-foreground: #0a0a0a;
+  --color-info: #15a8b5;
+  --color-info-foreground: #ffffff;
+
+  /* ─── Forma y elevación (Neobrutalism pulido) ───────── */
+  --radius-base: 8px;
+  --radius-sm: 5px;
+  --radius-lg: 12px;
+  --shadow-shadow: 4px 4px 0px 0px var(--color-shadow); /* sombra dura clásica */
+  --shadow-sm: 2px 2px 0px 0px var(--color-shadow); /* elementos pequeños */
+  --shadow-lg: 6px 6px 0px 0px var(--color-shadow); /* énfasis (modales/hero) */
 
   /* ─── Font Weights ──────────────────────────────────── */
   --font-weight-base: 500;
@@ -30,7 +56,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-size: 20px;
+    font-size: 16px; /* raíz estándar — base de toda la escala rem de Tailwind */
+    -webkit-text-size-adjust: 100%;
   }
 
   * {
@@ -41,9 +68,12 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-size: 1.5rem; /* 18px — DM Sans se lee mejor ligeramente más grande */
-    line-height: 1.7;
+    font-size: 1rem; /* 16px — texto base cómodo y legible */
+    line-height: 1.6;
     font-variation-settings: "opsz" 14;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1,

@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
-  const { role, email, privileges, isAuthenticated } = useAppSelector((s) => s.auth);
+  const { role, email, privileges, isAuthenticated, hydrated } = useAppSelector((s) => s.auth);
   const [loginMutation, { isLoading: isLoggingIn }] = useLoginMutation();
   const [logoutMutation] = useLogoutMutation();
 
@@ -55,5 +55,5 @@ export function useAuth() {
 
   const can = useCallback((p: Privilege) => privileges.includes(p), [privileges]);
 
-  return { role, email, privileges, isAuthenticated, isLoggingIn, login, logout, can };
+  return { role, email, privileges, isAuthenticated, hydrated, isLoggingIn, login, logout, can };
 }

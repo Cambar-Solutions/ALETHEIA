@@ -5,3 +5,4 @@ export { PrivilegeGuard } from './components/PrivilegeGuard';
 export { StoreProvider } from './store/StoreProvider';
 export { RoleLogin } from './components/RoleLogin';
 export { RoleDashboard } from './components/RoleDashboard';
+export { AuthSplash } from './components/AuthSplash';

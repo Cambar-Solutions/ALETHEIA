@@ -15,13 +15,17 @@ function readRoleCookie(): Role | null {
  */
 export function useRole() {
   const [role, setRole] = useState<Role | null>(null);
+  // `ready` evita el flash de "sin sesión"/"Sin permiso": empieza en false
+  // (coincide con el render del servidor) y pasa a true al leer la cookie en cliente.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setRole(readRoleCookie());
+    setReady(true);
   }, []);
 
   const privileges = role ? ROLE_PRIVILEGES[role] : [];
   const can = (p: Privilege) => privileges.includes(p);
 
-  return { role, privileges, can };
+  return { role, privileges, can, ready };
 }
