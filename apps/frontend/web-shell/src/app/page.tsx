@@ -1,9 +1,10 @@
 'use client';
 
 import { AuthSplash, RoleDashboard, RoleLogin, useAuth } from '@/features/auth';
+import type { Role } from '@/features/auth';
 import { useEffect } from 'react';
 
-const ROLE_HOME: Record<string, string> = {
+const ROLE_HOME: Partial<Record<Role, string>> = {
   SOLICITANTE: '/solicitudes',
   ABOGADO: '/flujo',
   APROBADOR: '/flujo',
