@@ -3,6 +3,7 @@ import { ToastProvider } from '@aletheia/frontend-commons';
 import type { Metadata } from 'next';
 import { Anton } from 'next/font/google';
 import localFont from 'next/font/local';
+import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 
 const dmSans = localFont({
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" className={`${dmSans.variable} ${anton.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
+        <NextTopLoader color="#15a8b5" showSpinner={false} height={3} />
         <StoreProvider>
           <ToastProvider>{children}</ToastProvider>
         </StoreProvider>
