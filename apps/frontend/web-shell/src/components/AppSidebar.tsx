@@ -186,7 +186,8 @@ export function AppSidebar({
 
         {/* Nav */}
         <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
-          {navLink('/', 'Panel de control', <LayoutDashboard className={ICON} />)}
+          {privileges.includes('USERS_MANAGE') &&
+            navLink('/', 'Panel de control', <LayoutDashboard className={ICON} />)}
 
           {SECTIONS.map((section) => {
             const visible = section.items.filter(canSee);
