@@ -10,6 +10,7 @@ import {
   CardTitle,
   ErrorState,
   LoadingState,
+  PageHeader,
   useRole,
   useToast,
 } from '@aletheia/frontend-commons';
@@ -27,7 +28,6 @@ import {
 } from '../../_shared/api/contracts-api';
 import { CancelContractModal } from '../../_shared/components/CancelContractModal';
 import { ErrorBanner } from '../../_shared/components/ErrorBanner';
-import { PageHeader } from '../../_shared/components/PageHeader';
 import { RequiredDocsList } from '../../_shared/components/RequiredDocsList';
 import { SlaIndicator } from '../../_shared/components/SlaIndicator';
 import { StatusBadge } from '../../_shared/components/StatusBadge';
@@ -133,7 +133,7 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
                 onRetry={validId ? () => refetch() : undefined}
               />
               <div className="flex justify-center">
-                <BackButton href="/" label="Volver al listado" />
+                <BackButton href="/solicitudes" label="Volver al listado" />
               </div>
             </CardContent>
           </Card>
@@ -181,11 +181,7 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
   return (
     <main className="bg-grid min-h-screen p-4 sm:p-6">
       <div className="mx-auto max-w-4xl space-y-6">
-        <PageHeader
-          title={contract.title}
-          subtitle={contract.folio}
-          actions={<BackButton href="/" />}
-        />
+        <PageHeader title={contract.title} subtitle={contract.folio} backHref="/solicitudes" />
 
         {/* Status + SLA strip */}
         <div className="flex flex-wrap items-center gap-3 rounded-base border-2 border-border bg-background px-4 py-3 shadow-shadow">

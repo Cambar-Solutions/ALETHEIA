@@ -37,6 +37,7 @@ export * from './ui/contract-status';
 export * from './ui/back-button';
 export * from './ui/page-header';
 export * from './ui/page-shell';
+export * from './ui/mf-sidebar';
 export { default as ContractDataTable } from './ui/data-table';
 
 // Editor de texto enriquecido + diseño de documento (plantillas / contratos)

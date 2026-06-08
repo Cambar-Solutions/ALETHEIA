@@ -12,6 +12,7 @@ import {
   FormField,
   Input,
   LoadingState,
+  PageHeader,
   Select,
   useRole,
   useToast,
@@ -29,7 +30,6 @@ import {
 } from '../../_shared/api/contracts-api';
 import { toBackendProviderType } from '../../_shared/api/types';
 import { ErrorBanner } from '../../_shared/components/ErrorBanner';
-import { PageHeader } from '../../_shared/components/PageHeader';
 import { RequiredDocsList } from '../../_shared/components/RequiredDocsList';
 import { PROVIDER_TYPE_LABEL, type ProviderType } from '../../_shared/domain/contract';
 
@@ -188,7 +188,7 @@ export function CreateContractView() {
                     : 'Solicitud no encontrada.'
                 }
               />
-              <BackButton href="/" label="Volver al listado" />
+              <BackButton href="/solicitudes" label="Volver al listado" />
             </CardContent>
           </Card>
         </div>
@@ -202,7 +202,7 @@ export function CreateContractView() {
         <PageHeader
           title={isEdit ? 'Editar solicitud' : 'Nueva solicitud'}
           subtitle={isEdit ? existing?.folio : 'Folio generado automáticamente'}
-          actions={<BackButton href="/" />}
+          backHref="/solicitudes"
         />
 
         <form onSubmit={handleSubmit} className="space-y-6">

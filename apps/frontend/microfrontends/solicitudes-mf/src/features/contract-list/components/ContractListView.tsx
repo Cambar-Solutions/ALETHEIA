@@ -11,6 +11,7 @@ import {
   ErrorState,
   Input,
   LoadingState,
+  PageHeader,
   Select,
   Table,
   TableBody,
@@ -33,7 +34,6 @@ import {
 } from '../../_shared/api/contracts-api';
 import { CancelContractModal } from '../../_shared/components/CancelContractModal';
 import { ErrorBanner } from '../../_shared/components/ErrorBanner';
-import { PageHeader } from '../../_shared/components/PageHeader';
 import { SlaIndicator } from '../../_shared/components/SlaIndicator';
 import { StatusBadge } from '../../_shared/components/StatusBadge';
 import {
