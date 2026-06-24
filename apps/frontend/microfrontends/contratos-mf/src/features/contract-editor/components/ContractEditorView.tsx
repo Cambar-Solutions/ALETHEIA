@@ -23,9 +23,34 @@ import { Eye, EyeOff, FileText, Save } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Label } from '../../../components/ui/label';
 import { NoAccess } from '../../../components/ui/no-access';
-import { useListContractsQuery, useListTemplatesQuery } from '../../api/templatesApi';
+import {
+  useGetContractDocumentQuery,
+  useListContractsQuery,
+  useListTemplatesQuery,
+  useSaveContractDocumentMutation,
+} from '../../api/templatesApi';
 import { readContractDoc, writeContractDoc } from '../../catalogs/contract-drafts';
 import { type Template, toUiTemplate } from '../../templates/types';
+
+/**
+ * Coerces an untrusted page-setup value (server document or stale local cache,
+ * which may have a missing/partial/legacy shape) into a valid {@link PageSetup}.
+ * Without this, a malformed `margins` crashes the whole editor in PageSetupControl.
+ */
+function normalizePageSetup(raw: unknown): PageSetup {
+  const value = (raw ?? {}) as Partial<PageSetup>;
+  const margins = (value.margins ?? {}) as Partial<PageSetup['margins']>;
+  const fallback = DEFAULT_PAGE_SETUP;
+  return {
+    size: value.size === 'LETTER' || value.size === 'A4' ? value.size : fallback.size,
+    margins: {
+      top: typeof margins.top === 'number' ? margins.top : fallback.margins.top,
+      right: typeof margins.right === 'number' ? margins.right : fallback.margins.right,
+      bottom: typeof margins.bottom === 'number' ? margins.bottom : fallback.margins.bottom,
+      left: typeof margins.left === 'number' ? margins.left : fallback.margins.left,
+    },
+  };
+}
 
 export function ContractEditorView() {
   const { can } = useRole();
@@ -48,6 +73,13 @@ export function ContractEditorView() {
   );
 
   const [contractId, setContractId] = useState<string>('');
+  const numericContractId = contractId ? Number(contractId) : undefined;
+  const { data: serverDoc, isFetching: isFetchingDoc } = useGetContractDocumentQuery(
+    numericContractId as number,
+    { skip: numericContractId === undefined },
+  );
+  const [saveContractDocument, { isLoading: isSaving }] = useSaveContractDocumentMutation();
+
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [header, setHeader] = useState<string>('');
@@ -74,20 +106,40 @@ export function ContractEditorView() {
   // Plantillas elegibles: las plantillas activas (no tienen sociedad asociada en el backend).
   const eligibleTemplates = useMemo(() => templates.filter((t) => t.active), [templates]);
 
-  // Al cambiar de contrato: carga el borrador local guardado (si existe) y resetea.
+  // Al cambiar de contrato: muestra de inmediato el borrador local en caché (si existe)
+  // mientras el servidor responde, y resetea el estado del editor.
   useEffect(() => {
     if (!contractId) return;
-    const existing = readContractDoc(contractId);
-    setBody(existing?.body ?? '');
-    setHeader(existing?.header ?? '');
-    setFooter(existing?.footer ?? '');
-    setPageSetup(existing?.pageSetup ?? DEFAULT_PAGE_SETUP);
+    const cached = readContractDoc(contractId);
+    setBody(cached?.body ?? '');
+    setHeader(cached?.header ?? '');
+    setFooter(cached?.footer ?? '');
+    setPageSetup(normalizePageSetup(cached?.pageSetup));
     setSelectedTemplateId('');
     setDirty(false);
     setSavedAt(null);
     setShowPreview(false);
     setPendingTemplateId(null);
   }, [contractId]);
+
+  // Fuente de verdad: cuando el servidor devuelve el documento elaborado, lo hidrata
+  // (y refresca la caché local). Si no hay documento en el servidor, conserva la caché.
+  useEffect(() => {
+    if (!contractId || isFetchingDoc || !serverDoc) return;
+    const doc = {
+      body: serverDoc.body ?? '',
+      header: serverDoc.header ?? '',
+      footer: serverDoc.footer ?? '',
+      pageSetup: normalizePageSetup(serverDoc.pageSetup),
+    };
+    setBody(doc.body);
+    setHeader(doc.header);
+    setFooter(doc.footer);
+    setPageSetup(doc.pageSetup);
+    setDirty(false);
+    writeContractDoc(contractId, doc);
+    // serverDoc cambia por contrato; contractId garantiza re-hidratación al cambiar.
+  }, [serverDoc, isFetchingDoc, contractId]);
 
   const canAccess = can('TEMPLATES_MANAGE') || can('CONTRACT_EDIT');
   if (!canAccess) {
@@ -128,15 +180,23 @@ export function ContractEditorView() {
     setSelectedTemplateId('');
   };
 
-  const handleSave = () => {
-    if (!contractId) return;
+  const handleSave = async () => {
+    if (!contractId || numericContractId === undefined) return;
+    // Caché local inmediata (borrador), luego persistencia en el servidor (fuente de verdad).
+    writeContractDoc(contractId, { body, header, footer, pageSetup });
     try {
-      writeContractDoc(contractId, { body, header, footer, pageSetup });
+      await saveContractDocument({
+        id: numericContractId,
+        body: { body, header, footer, pageSetup },
+      }).unwrap();
       setSavedAt(new Date().toLocaleTimeString('es-MX'));
       setDirty(false);
-      toast.success('Borrador guardado', 'El documento se guardó localmente en este navegador.');
+      toast.success('Documento guardado', 'El documento se guardó en el servidor.');
     } catch {
-      toast.error('No se pudo guardar', 'Ocurrió un error al guardar el borrador local.');
+      toast.error(
+        'No se pudo guardar',
+        'No se pudo guardar en el servidor; se conservó el borrador local.',
+      );
     }
   };
 
@@ -224,8 +284,8 @@ export function ContractEditorView() {
             ) : null}
 
             <p className="font-sans text-xs text-muted-foreground">
-              El documento elaborado es una previsualización/borrador local: se guarda solo en este
-              navegador y aún no se persiste en el servidor.
+              El documento elaborado se persiste en el servidor al guardar. Se mantiene además una
+              copia local como borrador de respaldo en este navegador.
             </p>
           </CardContent>
         </Card>
@@ -257,8 +317,8 @@ export function ContractEditorView() {
                 />
 
                 <div className="flex flex-wrap items-center gap-3">
-                  <Button onClick={handleSave}>
-                    <Save className="h-4 w-4" /> Guardar borrador local
+                  <Button onClick={handleSave} disabled={isSaving}>
+                    <Save className="h-4 w-4" /> {isSaving ? 'Guardando…' : 'Guardar documento'}
                   </Button>
                   <Button variant="neutral" onClick={() => setShowPreview((v) => !v)}>
                     {showPreview ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -266,7 +326,7 @@ export function ContractEditorView() {
                   </Button>
                   {savedAt ? (
                     <span className="font-sans text-xs text-muted-foreground">
-                      Borrador local guardado a las {savedAt}
+                      Documento guardado en el servidor a las {savedAt}
                     </span>
                   ) : null}
                 </div>

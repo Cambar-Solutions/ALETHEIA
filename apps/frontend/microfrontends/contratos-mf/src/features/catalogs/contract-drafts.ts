@@ -1,9 +1,8 @@
 // Soporte para el editor de "Elaborar documento" (contract-editor).
 //
-// El backend NO expone un endpoint para persistir el cuerpo HTML elaborado de un contrato,
-// por lo que el documento elaborado es una PREVISUALIZACIÓN / BORRADOR LOCAL y se guarda
-// únicamente en este navegador (localStorage). Las PLANTILLAS y los CONTRATOS que alimentan
-// el editor SÍ provienen del backend (GET /templates y GET /contracts vía RTK Query).
+// La FUENTE DE VERDAD del documento elaborado es el servidor (GET/PUT /contracts/:id/document).
+// Estas utilidades de localStorage funcionan como CACHÉ / BORRADOR LOCAL de respaldo: ofrecen
+// contenido instantáneo mientras el servidor responde y conservan el último estado editado.
 
 import { DEFAULT_PAGE_SETUP, type PageSetup } from '@aletheia/frontend-commons';
 

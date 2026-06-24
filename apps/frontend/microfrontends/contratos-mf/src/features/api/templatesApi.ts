@@ -2,7 +2,7 @@
 // El baseApi ya desempaqueta el envoltorio { data, ... }, por lo que los hooks
 // reciben el payload directo (BackendTemplate / BackendTemplate[]).
 
-import { baseApi } from '@aletheia/frontend-commons';
+import { type PageSetup, baseApi } from '@aletheia/frontend-commons';
 
 /** Plantilla tal como la devuelve el backend (contracts-service). */
 export interface BackendTemplate {
@@ -36,6 +36,18 @@ export interface BackendContract {
   society?: { id: number; name: string } | null;
 }
 
+/**
+ * Documento elaborado de un contrato (cuerpo HTML + diseño), persistido en el
+ * servidor vía GET/PUT /contracts/:id/document. La fuente de verdad es el servidor;
+ * localStorage queda solo como caché de borrador local.
+ */
+export interface ContractDocumentBody {
+  body: string;
+  header?: string;
+  footer?: string;
+  pageSetup?: PageSetup;
+}
+
 export const templatesApi = baseApi.injectEndpoints({
   endpoints: (b) => ({
     listTemplates: b.query<BackendTemplate[], void>({
@@ -59,6 +71,19 @@ export const templatesApi = baseApi.injectEndpoints({
       query: () => ({ url: '/contracts' }),
       providesTags: ['Contract'],
     }),
+    // GET /contracts/:id/document — documento elaborado guardado (null si no existe).
+    getContractDocument: b.query<ContractDocumentBody | null, number>({
+      query: (id) => ({ url: `/contracts/${id}/document` }),
+      providesTags: (_res, _err, id) => [{ type: 'Document', id: `contract-${id}` }],
+    }),
+    // PUT /contracts/:id/document — persiste el documento elaborado en el servidor.
+    saveContractDocument: b.mutation<
+      { fileUrl: string; savedAt: string },
+      { id: number; body: ContractDocumentBody }
+    >({
+      query: ({ id, body }) => ({ url: `/contracts/${id}/document`, method: 'PUT', body }),
+      invalidatesTags: (_res, _err, { id }) => [{ type: 'Document', id: `contract-${id}` }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -69,4 +94,6 @@ export const {
   useCreateTemplateMutation,
   useUpdateTemplateMutation,
   useListContractsQuery,
+  useGetContractDocumentQuery,
+  useSaveContractDocumentMutation,
 } = templatesApi;

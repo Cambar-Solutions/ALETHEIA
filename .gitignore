@@ -27,6 +27,10 @@ prisma/dev.db
 # Clientes Prisma generados (output por servicio)
 apps/backend/services/*/generated/
 
+# Uploaded document binaries (gateway local disk storage runtime dir).
+# Anchored to the gateway root so it never matches src/.../storage/ source folders.
+/apps/backend/gateway/storage/
+
 # Logs
 *.log
 npm-debug.log*

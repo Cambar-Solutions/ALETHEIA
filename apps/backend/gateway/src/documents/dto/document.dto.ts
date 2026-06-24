@@ -25,9 +25,13 @@ export class CreateDocumentDto {
   @IsString()
   type: string;
 
-  @ApiProperty({ example: 'https://storage/contracts/1/acta.pdf' })
+  // Optional: when a binary file is uploaded (multipart), the gateway fills this
+  // with the servable URL "/files/<id>". Kept for backwards compatibility with
+  // clients that still send a plain fileUrl string (no file).
+  @ApiPropertyOptional({ example: 'https://storage/contracts/1/acta.pdf' })
+  @IsOptional()
   @IsString()
-  fileUrl: string;
+  fileUrl?: string;
 
   @ApiPropertyOptional({ example: 102400 })
   @IsOptional()
@@ -51,9 +55,12 @@ export class CreateDocumentDto {
 }
 
 export class CreateVersionDto {
-  @ApiProperty({ example: 'https://storage/contracts/1/acta-v2.pdf' })
+  // Optional: filled by the gateway with "/files/<id>" when a binary is uploaded;
+  // still accepts a plain fileUrl string for backwards compatibility.
+  @ApiPropertyOptional({ example: 'https://storage/contracts/1/acta-v2.pdf' })
+  @IsOptional()
   @IsString()
-  fileUrl: string;
+  fileUrl?: string;
 
   @ApiPropertyOptional({ example: 204800 })
   @IsOptional()

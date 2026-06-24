@@ -15,14 +15,20 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import type { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { firstValueFrom } from 'rxjs';
+import { FileStorageService } from '../documents/storage/file-storage.service';
+import { SaveContractDocumentDto } from './dto/contract-document.dto';
 import { CancelContractDto, ContractFiltersDto } from './dto/contract-filters.dto';
 import { CreateContractDto } from './dto/create-contract.dto';
 import { UpdateContractDto } from './dto/update-contract.dto';
+
+/** Deterministic storage key for a contract's elaborated document (JSON). */
+const contractDocumentKey = (contractId: number) => `contract-document-${contractId}.json`;
 
 @ApiTags('contracts')
 @ApiBearerAuth('access-token')
@@ -31,6 +37,7 @@ export class ContractsController {
   constructor(
     @Inject(SERVICE_CLIENTS.CONTRACTS) private readonly contracts: ClientProxy,
     @Inject(SERVICE_CLIENTS.WORKFLOW) private readonly workflow: ClientProxy,
+    private readonly storage: FileStorageService,
   ) {}
 
   @Post()
@@ -57,6 +64,31 @@ export class ContractsController {
   @ApiOperation({ summary: 'Obtener un contrato por id' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return firstValueFrom(this.contracts.send(CONTRACTS_PATTERNS.FIND_ONE, { id }));
+  }
+
+  @Get(':id/document')
+  @ApiOperation({ summary: 'Obtener el documento elaborado (HTML/diseño) de un contrato' })
+  async getDocument(@Param('id', ParseIntPipe) id: number) {
+    const raw = await this.storage.readText(contractDocumentKey(id));
+    // Null when never saved — the editor treats it as an empty draft.
+    return raw ? (JSON.parse(raw) as SaveContractDocumentDto) : null;
+  }
+
+  @Put(':id/document')
+  @RequirePrivilege('CONTRACT_EDIT')
+  @ApiOperation({ summary: 'Guardar el documento elaborado (HTML/diseño) de un contrato' })
+  async saveDocument(@Param('id', ParseIntPipe) id: number, @Body() dto: SaveContractDocumentDto) {
+    const document: SaveContractDocumentDto = {
+      body: dto.body,
+      header: dto.header ?? '',
+      footer: dto.footer ?? '',
+      pageSetup: dto.pageSetup,
+    };
+    const { fileUrl } = await this.storage.saveText(
+      contractDocumentKey(id),
+      JSON.stringify(document),
+    );
+    return { fileUrl, savedAt: new Date().toISOString() };
   }
 
   @Patch(':id')
