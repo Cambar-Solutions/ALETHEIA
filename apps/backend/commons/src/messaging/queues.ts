@@ -79,6 +79,9 @@ export interface NotifyJob {
 export const bullConnection = () => ({
   host: process.env.REDIS_HOST ?? 'localhost',
   port: Number(process.env.REDIS_PORT ?? 6379),
+  ...(process.env.REDIS_PASSWORD ? { password: process.env.REDIS_PASSWORD } : {}),
+  // Keyspace aislado cuando el Redis se comparte con otros proyectos.
+  ...(process.env.REDIS_DB ? { db: Number(process.env.REDIS_DB) } : {}),
 });
 
 /** Opciones por defecto de los jobs: reintentos con backoff + limpieza. */

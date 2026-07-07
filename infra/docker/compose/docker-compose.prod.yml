@@ -1,0 +1,151 @@
+# ALETHEIA — production stack for Dokploy.
+#
+# Reuses shared infra already running on the server (both on dokploy-network):
+#   - PostgreSQL: cetaem-db-fdhrl2 (database "aletheia", schema-per-service)
+#   - Redis:      potrillos-prod-45v7dr (password + REDIS_DB for BullMQ isolation)
+#
+# Only web-shell and gateway get public domains (Traefik via dokploy-network);
+# the 7 microfrontends are proxied by web-shell (Next.js Multi-Zones rewrites)
+# and the 4 microservices talk to the gateway over Redis transport.
+
+x-backend: &backend
+  build:
+    context: ../../..
+    dockerfile: infra/docker/Dockerfile.backend
+  image: aletheia-backend
+  restart: unless-stopped
+  networks:
+    - aletheia
+    - dokploy-network
+
+x-backend-env: &backend-env
+  NODE_ENV: production
+  REDIS_HOST: ${REDIS_HOST}
+  REDIS_PORT: ${REDIS_PORT}
+  REDIS_PASSWORD: ${REDIS_PASSWORD}
+  REDIS_DB: ${REDIS_DB}
+
+x-frontend: &frontend
+  build:
+    context: ../../..
+    dockerfile: infra/docker/Dockerfile.frontend
+    args:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+  image: aletheia-frontend
+  restart: unless-stopped
+  environment:
+    NODE_ENV: production
+  networks:
+    - aletheia
+
+services:
+  gateway:
+    <<: *backend
+    command: ["node", "apps/backend/gateway/dist/main.js"]
+    environment:
+      <<: *backend-env
+      APP_PORT: "3001"
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      FILE_STORAGE_DIR: /data/uploads
+    volumes:
+      - uploads:/data/uploads
+    expose:
+      - "3001"
+
+  auth-service:
+    <<: *backend
+    command:
+      [
+        "sh",
+        "-c",
+        "cd apps/backend/services/auth-service && npx prisma migrate deploy && node dist/main.js",
+      ]
+    environment:
+      <<: *backend-env
+      DATABASE_URL: ${AUTH_DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+
+  contracts-service:
+    <<: *backend
+    command:
+      [
+        "sh",
+        "-c",
+        "cd apps/backend/services/contracts-service && npx prisma migrate deploy && node dist/main.js",
+      ]
+    environment:
+      <<: *backend-env
+      DATABASE_URL: ${CONTRACTS_DATABASE_URL}
+
+  documents-service:
+    <<: *backend
+    command:
+      [
+        "sh",
+        "-c",
+        "cd apps/backend/services/documents-service && npx prisma migrate deploy && node dist/main.js",
+      ]
+    environment:
+      <<: *backend-env
+      DATABASE_URL: ${DOCUMENTS_DATABASE_URL}
+
+  workflow-service:
+    <<: *backend
+    command:
+      [
+        "sh",
+        "-c",
+        "cd apps/backend/services/workflow-service && npx prisma migrate deploy && node dist/main.js",
+      ]
+    environment:
+      <<: *backend-env
+      DATABASE_URL: ${WORKFLOW_DATABASE_URL}
+
+  web-shell:
+    <<: *frontend
+    command: ["pnpm", "--filter", "web-shell", "start"]
+    networks:
+      - aletheia
+      - dokploy-network
+    expose:
+      - "4000"
+
+  solicitudes-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "solicitudes-mf", "start"]
+
+  contratos-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "contratos-mf", "start"]
+
+  documentos-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "documentos-mf", "start"]
+
+  flujo-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "flujo-mf", "start"]
+
+  firmas-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "firmas-mf", "start"]
+
+  reportes-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "reportes-mf", "start"]
+
+  admin-mf:
+    <<: *frontend
+    command: ["pnpm", "--filter", "admin-mf", "start"]
+
+volumes:
+  uploads:
+
+networks:
+  aletheia:
+  dokploy-network:
+    external: true

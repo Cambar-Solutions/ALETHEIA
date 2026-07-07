@@ -11,17 +11,19 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // CORS_ORIGINS: lista separada por comas (producción). Fallback: puertos locales de los MFs.
+  const corsOrigins = process.env.CORS_ORIGINS?.split(',').map((o) => o.trim()) ?? [
+    'http://localhost:4000',
+    'http://localhost:4001',
+    'http://localhost:4002',
+    'http://localhost:4003',
+    'http://localhost:4004',
+    'http://localhost:4005',
+    'http://localhost:4006',
+    'http://localhost:4007',
+  ];
   app.enableCors({
-    origin: [
-      'http://localhost:4000',
-      'http://localhost:4001',
-      'http://localhost:4002',
-      'http://localhost:4003',
-      'http://localhost:4004',
-      'http://localhost:4005',
-      'http://localhost:4006',
-      'http://localhost:4007',
-    ],
+    origin: corsOrigins,
     credentials: true,
   });
 

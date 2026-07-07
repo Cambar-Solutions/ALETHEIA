@@ -1,0 +1,43 @@
+# Frontend image — builds web-shell + the 7 microfrontends (Next.js Multi-Zones)
+# in a single image. Each compose service runs this image with a different command.
+FROM node:22-alpine
+
+RUN corepack enable
+
+WORKDIR /app
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+RUN pnpm fetch
+
+COPY . .
+RUN npm pkg delete scripts.prepare && pnpm install --frozen-lockfile --offline
+
+# Baked at build time: NEXT_PUBLIC_* goes into the client bundle and the
+# MF_*_URL zone rewrites go into web-shell's routes manifest.
+ARG NEXT_PUBLIC_API_URL=https://api.aletheia.levsek.com.mx
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV MF_SOLICITUDES_URL=http://solicitudes-mf:4001 \
+    MF_CONTRATOS_URL=http://contratos-mf:4002 \
+    MF_DOCUMENTOS_URL=http://documentos-mf:4003 \
+    MF_FLUJO_URL=http://flujo-mf:4004 \
+    MF_FIRMAS_URL=http://firmas-mf:4005 \
+    MF_REPORTES_URL=http://reportes-mf:4006 \
+    MF_ADMIN_URL=http://admin-mf:4007 \
+    NEXT_TELEMETRY_DISABLED=1
+
+# --concurrency=2 keeps peak build memory bounded (8 Next.js builds).
+RUN pnpm turbo build \
+  --filter=web-shell \
+  --filter=solicitudes-mf \
+  --filter=contratos-mf \
+  --filter=documentos-mf \
+  --filter=flujo-mf \
+  --filter=firmas-mf \
+  --filter=reportes-mf \
+  --filter=admin-mf \
+  --concurrency=2
+
+ENV NODE_ENV=production
+
+# Default command (shell); microfrontends override it in docker-compose.
+CMD ["pnpm", "--filter", "web-shell", "start"]

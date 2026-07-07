@@ -1,0 +1,11 @@
+.git
+node_modules
+**/node_modules
+**/dist
+**/.next
+**/.turbo
+apps/backend/services/*/generated
+**/.env
+**/.env.local
+docs
+*.md
