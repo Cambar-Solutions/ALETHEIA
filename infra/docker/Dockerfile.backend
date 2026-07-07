@@ -6,14 +6,15 @@ RUN apk add --no-cache openssl
 RUN corepack enable
 
 WORKDIR /app
-
-# Dependency layer: only lockfile/manifest changes bust this cache.
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-RUN pnpm fetch
+ENV CI=true
 
 COPY . .
 # "prepare: husky" fails on a .git-less build context.
-RUN npm pkg delete scripts.prepare && pnpm install --frozen-lockfile --offline
+RUN npm pkg delete scripts.prepare
+# BuildKit cache mount keeps the pnpm store across builds.
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+  pnpm config set store-dir /pnpm/store && \
+  pnpm install --frozen-lockfile
 
 # turbo build runs db:generate (Prisma) and builds backend-commons first (^build).
 RUN pnpm turbo build \
