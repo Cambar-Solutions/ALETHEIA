@@ -4,6 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate"],
+      "env": ["MF_*", "NEXT_PUBLIC_*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
