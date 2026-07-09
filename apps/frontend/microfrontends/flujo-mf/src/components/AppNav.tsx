@@ -33,7 +33,7 @@ export function AppNav({ active }: { active: NavKey }) {
             href={item.href}
             aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'inline-flex items-center gap-2 rounded-base border-2 border-border px-3 py-2 text-sm font-heading shadow-shadow transition-all',
+              'inline-flex items-center gap-2 rounded-base border-2 border-border px-3 py-2 text-sm font-sans font-semibold shadow-shadow transition-all',
               'hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none',
               isActive ? 'bg-main text-main-foreground' : 'bg-background text-foreground',
             )}

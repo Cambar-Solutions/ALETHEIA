@@ -25,7 +25,7 @@ export function AuditTimeline({ entries }: AuditTimelineProps) {
           <span className="absolute left-0 top-1.5 h-4 w-4 rounded-full border-2 border-border bg-main" />
           <div className="rounded-base border-2 border-border bg-background p-4 shadow-shadow">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <Badge variant="neutral" className="font-heading">
+              <Badge variant="neutral">
                 {auditActionLabel(entry.action)}
               </Badge>
               <time className="font-sans text-xs text-muted-foreground">

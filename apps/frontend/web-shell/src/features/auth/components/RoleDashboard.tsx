@@ -129,7 +129,7 @@ export function RoleDashboard() {
 
             {/* Stats */}
             <div>
-              <p className="mb-3 text-xs font-heading uppercase tracking-[0.14em] text-muted-foreground">
+              <p className="mb-3 text-xs font-sans font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Resumen del sistema
               </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -153,7 +153,7 @@ export function RoleDashboard() {
 
             {/* Module grid */}
             <div>
-              <p className="mb-3 text-xs font-heading uppercase tracking-[0.14em] text-muted-foreground">
+              <p className="mb-3 text-xs font-sans font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Módulos disponibles para tu rol — {accessibleModules.length} de {MODULES.length}
               </p>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -179,7 +179,7 @@ export function RoleDashboard() {
                     <p className="pl-3 text-sm leading-snug text-muted-foreground">
                       {mod.description}
                     </p>
-                    <p className="mt-3 pl-3 font-sans text-xs text-foreground/40">{mod.href}</p>
+                    <p className="mt-3 pl-3 font-sans text-xs text-muted-foreground">{mod.href}</p>
                   </a>
                 ))}
 
@@ -190,14 +190,14 @@ export function RoleDashboard() {
                     className="border-2 border-border border-dashed bg-secondary-background/50 rounded-base p-5 opacity-40"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <span className="font-heading text-lg leading-tight text-foreground/40">
+                      <span className="font-heading text-lg leading-tight text-muted-foreground">
                         {mod.label}
                       </span>
-                      <span className="text-xs text-foreground/25 font-sans border border-border/30 px-1.5 py-0.5 rounded">
+                      <span className="text-xs text-muted-foreground font-sans border border-border/30 px-1.5 py-0.5 rounded">
                         Sin acceso
                       </span>
                     </div>
-                    <p className="text-xs text-foreground/30 leading-snug">
+                    <p className="text-xs text-muted-foreground leading-snug">
                       Sin acceso para este rol
                     </p>
                   </div>

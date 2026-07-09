@@ -142,7 +142,7 @@ export function SignatureDetailView({ contractId }: SignatureDetailViewProps) {
                   <div key={sig.id} className="space-y-6">
                     {/* Imagen de la firma (base64) */}
                     <div className="space-y-2">
-                      <span className="text-xs font-heading uppercase tracking-widest text-foreground/70">
+                      <span className="text-xs font-sans font-semibold uppercase tracking-widest text-foreground/70">
                         Firma · {methodLabel(sig.method)}
                       </span>
                       <div className="rounded-base border-2 border-border bg-background p-4 shadow-shadow">
@@ -157,13 +157,13 @@ export function SignatureDetailView({ contractId }: SignatureDetailViewProps) {
                     {/* Metadatos de la firma */}
                     <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="space-y-1">
-                        <dt className="text-xs font-heading uppercase tracking-widest text-foreground/70">
+                        <dt className="text-xs font-sans font-semibold uppercase tracking-widest text-foreground/70">
                           Apoderado
                         </dt>
                         <dd className="font-sans text-sm">{attorney?.name ?? '—'}</dd>
                       </div>
                       <div className="space-y-1">
-                        <dt className="text-xs font-heading uppercase tracking-widest text-foreground/70">
+                        <dt className="text-xs font-sans font-semibold uppercase tracking-widest text-foreground/70">
                           Poder legal
                         </dt>
                         <dd className="font-sans text-sm text-foreground/70">
@@ -171,13 +171,13 @@ export function SignatureDetailView({ contractId }: SignatureDetailViewProps) {
                         </dd>
                       </div>
                       <div className="space-y-1">
-                        <dt className="text-xs font-heading uppercase tracking-widest text-foreground/70">
+                        <dt className="text-xs font-sans font-semibold uppercase tracking-widest text-foreground/70">
                           Firmado por (id)
                         </dt>
                         <dd className="font-sans text-sm">{sig.signedById}</dd>
                       </div>
                       <div className="space-y-1">
-                        <dt className="text-xs font-heading uppercase tracking-widest text-foreground/70">
+                        <dt className="text-xs font-sans font-semibold uppercase tracking-widest text-foreground/70">
                           Fecha
                         </dt>
                         <dd className="font-sans text-sm">{formatDate(sig.signedAt)}</dd>

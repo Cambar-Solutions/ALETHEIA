@@ -59,7 +59,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-11 px-3 text-left align-middle font-heading text-xs tracking-widest uppercase text-foreground/60 [&:has([role=checkbox])]:pr-0',
+      'h-11 px-3 text-left align-middle font-sans font-semibold text-xs tracking-widest uppercase text-muted-foreground [&:has([role=checkbox])]:pr-0',
       className,
     )}
     {...props}
@@ -88,7 +88,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn('mt-4 text-xs font-sans text-foreground/40', className)}
+    className={cn('mt-4 text-xs font-sans text-muted-foreground', className)}
     {...props}
   />
 ));

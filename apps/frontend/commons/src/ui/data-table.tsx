@@ -126,7 +126,7 @@ const statusColor: Record<ContractStatus, string> = {
 function StatusBadge({ status }: { status: ContractStatus }) {
   return (
     <span
-      className={`inline-block border-2 border-border px-2 py-0.5 text-[10px] font-heading tracking-widest rounded-base ${statusColor[status]}`}
+      className={`inline-block border-2 border-border px-2 py-0.5 text-[10px] font-sans font-semibold tracking-widest rounded-base ${statusColor[status]}`}
     >
       {status}
     </span>
@@ -161,7 +161,7 @@ const columns: ColumnDef<Contract>[] = [
     accessorKey: 'id',
     header: 'ID Contrato',
     cell: ({ row }) => (
-      <span className="font-sans text-xs text-foreground/60">{row.getValue('id')}</span>
+      <span className="font-sans text-xs text-muted-foreground">{row.getValue('id')}</span>
     ),
   },
   {
@@ -170,7 +170,7 @@ const columns: ColumnDef<Contract>[] = [
       <Button
         variant="noShadow"
         size="sm"
-        className="px-0 font-heading text-xs tracking-widest uppercase"
+        className="px-0 font-sans font-semibold text-xs tracking-widest uppercase"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Proveedor <ArrowUpDown className="ml-1 h-3 w-3" />
@@ -187,7 +187,7 @@ const columns: ColumnDef<Contract>[] = [
     accessorKey: 'tipo',
     header: 'Tipo',
     cell: ({ row }) => (
-      <span className="font-sans text-xs text-foreground/60">{row.getValue('tipo')}</span>
+      <span className="font-sans text-xs text-muted-foreground">{row.getValue('tipo')}</span>
     ),
   },
   {
@@ -198,7 +198,7 @@ const columns: ColumnDef<Contract>[] = [
   {
     accessorKey: 'monto',
     header: () => (
-      <div className="text-right font-heading text-xs tracking-widest uppercase">Monto</div>
+      <div className="text-right font-sans font-semibold text-xs tracking-widest uppercase">Monto</div>
     ),
     cell: ({ row }) => {
       const formatted = new Intl.NumberFormat('es-MX', {
@@ -325,7 +325,7 @@ export default function ContractDataTable() {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center font-sans text-foreground/40"
+                  className="h-24 text-center font-sans text-muted-foreground"
                 >
                   Sin resultados.
                 </TableCell>
@@ -337,7 +337,7 @@ export default function ContractDataTable() {
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-4">
-        <span className="text-xs font-sans text-foreground/40">
+        <span className="text-xs font-sans text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} de{' '}
           {table.getFilteredRowModel().rows.length} fila(s) seleccionadas.
         </span>

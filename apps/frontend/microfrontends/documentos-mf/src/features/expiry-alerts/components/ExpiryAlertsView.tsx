@@ -214,7 +214,7 @@ export function ExpiryAlertsView() {
                 <TableBody>
                   {filtered.map(({ doc, status }) => (
                     <TableRow key={doc.id}>
-                      <TableCell className="font-heading">{doc.label}</TableCell>
+                      <TableCell className="font-sans">{doc.label}</TableCell>
                       <TableCell>{doc.contractFolio ?? doc.contractId}</TableCell>
                       <TableCell>{PROVIDER_TYPE_LABELS[doc.providerType]}</TableCell>
                       <TableCell>{formatDate(doc.expiryDate)}</TableCell>

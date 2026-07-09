@@ -25,13 +25,13 @@ export function ContratosView() {
         </header>
 
         <div className="grid gap-6 md:grid-cols-3">
-          <Card>
+          <Card className="flex h-full flex-col">
             <CardHeader>
               <LayoutTemplate className="h-6 w-6" />
               <CardTitle className="text-xl">Plantillas</CardTitle>
               <CardDescription>Crea y administra plantillas de contrato (HU-18).</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-auto">
               <CookiePrivilegeGuard
                 privilege="TEMPLATES_MANAGE"
                 fallback={<Badge variant="secondary">Sin permiso (TEMPLATES_MANAGE)</Badge>}
@@ -43,13 +43,13 @@ export function ContratosView() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="flex h-full flex-col">
             <CardHeader>
               <FileText className="h-6 w-6" />
               <CardTitle className="text-xl">Editor de plantilla</CardTitle>
               <CardDescription>Editor enriquecido WYSIWYG-lite (HU-18).</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-auto">
               <CookiePrivilegeGuard
                 privilege="TEMPLATES_MANAGE"
                 fallback={<Badge variant="secondary">Sin permiso (TEMPLATES_MANAGE)</Badge>}
@@ -63,13 +63,13 @@ export function ContratosView() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="flex h-full flex-col">
             <CardHeader>
               <FileSignature className="h-6 w-6" />
               <CardTitle className="text-xl">Elaborar documento</CardTitle>
               <CardDescription>Genera el documento de un contrato (HU-19).</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-auto">
               <Link href="/elaborar">
                 <Button variant="neutral" className="w-full">
                   Elaborar contrato

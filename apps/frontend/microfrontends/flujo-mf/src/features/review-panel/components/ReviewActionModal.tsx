@@ -123,7 +123,7 @@ export function ReviewActionModal({
         </div>
 
         <label className="block space-y-1.5">
-          <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
+          <span className="font-sans font-semibold text-xs uppercase tracking-widest text-muted-foreground">
             Comentario {meta.commentRequired ? '(obligatorio)' : '(opcional)'}
           </span>
           <Textarea

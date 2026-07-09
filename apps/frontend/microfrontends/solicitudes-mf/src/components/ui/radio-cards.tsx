@@ -54,7 +54,7 @@ export function RadioCards<T extends string>({
               {selected && <Check className="h-3 w-3 text-foreground" strokeWidth={3} />}
             </span>
             <span>
-              <span className="block font-heading text-sm leading-tight">{opt.label}</span>
+              <span className="block font-sans font-semibold text-sm leading-tight">{opt.label}</span>
               {opt.hint && (
                 <span
                   className={cn(

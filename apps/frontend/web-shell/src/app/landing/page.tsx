@@ -115,28 +115,28 @@ export default function HomePage() {
           <nav className="hidden md:flex items-center gap-8 text-sm">
             <a
               href="#capabilities"
-              className="text-foreground/60 hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Solución
             </a>
             <a
               href="#philosophy"
-              className="text-foreground/60 hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Filosofía
             </a>
-            <a href="#roles" className="text-foreground/60 hover:text-foreground transition-colors">
+            <a href="#roles" className="text-muted-foreground hover:text-foreground transition-colors">
               Roles
             </a>
             <Link
               href="/como-funciona"
-              className="text-foreground/60 hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Cómo funciona
             </Link>
             <Link
               href="/componentes"
-              className="text-foreground/40 hover:text-foreground transition-colors flex items-center gap-1"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
             >
               Componentes <ExternalLink className="w-3 h-3" />
             </Link>
@@ -152,7 +152,7 @@ export default function HomePage() {
         {/* Left — text */}
         <div className="bg-grid flex flex-col justify-center px-8 lg:px-16 py-16 gap-8 relative z-10">
           <div className="space-y-6">
-            <p className="text-xs font-sans text-foreground/40 tracking-widest uppercase">
+            <p className="text-xs font-sans font-semibold text-muted-foreground tracking-widest uppercase">
               Gestión Contractual Enterprise
             </p>
 
@@ -164,7 +164,7 @@ export default function HomePage() {
               <span className="text-main">Sin ambigüedades.</span>
             </h1>
 
-            <p className="text-xl text-foreground/60 max-w-lg leading-relaxed">
+            <p className="text-xl text-muted-foreground max-w-lg leading-relaxed">
               ALETHEIA centraliza, estructura y traza el ciclo de vida contractual completo — desde
               la primera solicitud hasta la firma final — con roles claros, alertas SLA y bitácora
               inmutable.
@@ -182,7 +182,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-sans text-foreground/40">
+          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-sans text-muted-foreground">
             {[
               '5 roles con privilegios',
               'JWT + RBAC',
@@ -224,7 +224,7 @@ export default function HomePage() {
       <section className="py-24 border-b-2 border-border bg-grid">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-14">
-            <p className="text-xs font-sans text-foreground/40 tracking-widest mb-4">
+            <p className="text-xs font-sans font-semibold text-muted-foreground tracking-widest mb-4">
               // EL PROBLEMA
             </p>
             <h2 className={H2}>
@@ -244,12 +244,12 @@ export default function HomePage() {
                   <div className="w-10 h-10 border-2 border-border rounded-base flex items-center justify-center bg-secondary-background flex-shrink-0">
                     <p.icon className="w-5 h-5 text-foreground/60" />
                   </div>
-                  <span className="font-sans text-xs text-foreground/30 tracking-widest">
+                  <span className="font-sans text-xs text-muted-foreground tracking-widest">
                     0{i + 1}
                   </span>
                 </div>
                 <h3 className="text-xl font-heading uppercase tracking-wide mb-3">{p.title}</h3>
-                <p className="text-lg text-foreground/60 leading-relaxed">{p.desc}</p>
+                <p className="text-lg text-muted-foreground leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -383,7 +383,7 @@ export default function HomePage() {
               >
                 <div className="flex items-center justify-between mb-5">
                   <role.icon className="w-5 h-5" />
-                  <span className="font-sans text-xs opacity-30 font-heading">0{i + 1}</span>
+                  <span className="font-sans text-xs opacity-30">0{i + 1}</span>
                 </div>
                 <h3 className="font-heading text-base uppercase tracking-wide mb-3">{role.name}</h3>
                 <p className="text-base opacity-65 leading-relaxed">{role.desc}</p>
@@ -451,10 +451,10 @@ export default function HomePage() {
             />
             <div>
               <p className="font-heading text-sm tracking-widest uppercase">ALETHEIA</p>
-              <p className="text-sm text-foreground/40">Contract Lifecycle Management</p>
+              <p className="text-sm text-muted-foreground">Contract Lifecycle Management</p>
             </div>
           </div>
-          <nav className="flex items-center gap-6 text-sm font-sans text-foreground/40">
+          <nav className="flex items-center gap-6 text-sm font-sans text-muted-foreground">
             <a href="#capabilities" className="hover:text-foreground transition-colors">
               Solución
             </a>

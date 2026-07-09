@@ -94,7 +94,7 @@ export function DocumentUploadRow({
             <FileIcon className="h-5 w-5" />
           </span>
           <div>
-            <div className="font-heading text-base">{requirement.label}</div>
+            <div className="font-sans font-semibold text-base">{requirement.label}</div>
             <div className="font-sans text-xs text-muted-foreground">
               {requirement.tracksExpiry
                 ? 'Acepta fecha de vigencia (opcional)'
@@ -154,7 +154,7 @@ export function DocumentUploadRow({
                 className="flex items-center gap-1 font-sans text-xs uppercase tracking-wide text-muted-foreground"
               >
                 Vigencia
-                <span className="font-sans text-[10px] normal-case tracking-normal text-foreground/50">
+                <span className="font-sans text-[10px] normal-case tracking-normal text-muted-foreground">
                   (opcional)
                 </span>
               </label>

@@ -147,7 +147,7 @@ function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }
       <span className={cn('absolute inset-y-0 left-0 w-1.5', meta.accent)} aria-hidden="true" />
       <Icon className={cn('mt-0.5 size-5 shrink-0', meta.iconColor)} aria-hidden="true" />
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-heading leading-snug tracking-tight">{toast.title}</p>
+        <p className="text-sm font-sans font-semibold leading-snug tracking-tight">{toast.title}</p>
         {toast.description ? (
           <p className="mt-0.5 text-xs font-sans leading-snug text-muted-foreground">
             {toast.description}

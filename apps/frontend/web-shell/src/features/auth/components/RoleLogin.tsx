@@ -83,7 +83,7 @@ export function RoleLogin() {
         </div>
 
         <div className="relative z-10 border-t border-background/10 pt-6">
-          <p className="mb-2 font-heading text-xs uppercase tracking-[0.16em] text-background/30">
+          <p className="mb-2 font-sans font-semibold text-xs uppercase tracking-[0.16em] text-background/30">
             Módulos del sistema
           </p>
           <p className="text-sm leading-relaxed text-background/40">

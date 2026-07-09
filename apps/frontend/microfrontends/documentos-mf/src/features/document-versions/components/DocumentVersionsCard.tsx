@@ -98,7 +98,7 @@ export function DocumentVersionsCard({
                 const isActive = v.version === document.currentVersion;
                 return (
                   <TableRow key={v.version} data-state={isActive ? 'selected' : undefined}>
-                    <TableCell className="font-heading">v{v.version}</TableCell>
+                    <TableCell className="font-sans">v{v.version}</TableCell>
                     <TableCell className="max-w-[180px] truncate" title={v.fileName}>
                       {v.fileName}
                     </TableCell>

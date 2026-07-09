@@ -87,6 +87,26 @@
   }
 }
 
+/* ─── Scrollbar global (delgada, color de marca) ────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-main) var(--color-secondary-background);
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--color-secondary-background);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-main);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-main-hover);
+}
+
 /* ─── Neobrutalism grid background ──────────────────────────────────── */
 .bg-grid {
   background-color: #ffffff;

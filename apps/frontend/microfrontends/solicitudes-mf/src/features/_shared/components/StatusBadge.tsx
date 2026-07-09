@@ -9,7 +9,7 @@ export function StatusBadge({ status, className }: { status: ContractStatus; cla
   return (
     <span
       className={cn(
-        'inline-block whitespace-nowrap rounded-base border-2 border-border px-2 py-0.5 font-heading text-[10px] tracking-widest',
+        'inline-block whitespace-nowrap rounded-base border-2 border-border px-2 py-0.5 font-sans font-semibold text-[10px] tracking-widest',
         STATUS_COLOR[status],
         className,
       )}

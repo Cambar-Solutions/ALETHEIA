@@ -45,7 +45,7 @@ import { AuditTimeline } from './AuditTimeline';
 function InfoRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 border-b-2 border-border/40 py-2 last:border-0 sm:flex-row sm:items-center sm:justify-between">
-      <span className="font-heading text-xs tracking-widest uppercase text-muted-foreground">
+      <span className="font-sans font-semibold text-xs tracking-widest uppercase text-muted-foreground">
         {label}
       </span>
       <span className="font-sans text-sm">{children}</span>
@@ -185,12 +185,12 @@ export function ContractDetailView({ contractId }: { contractId: string }) {
 
         {/* Status + SLA strip */}
         <div className="flex flex-wrap items-center gap-3 rounded-base border-2 border-border bg-background px-4 py-3 shadow-shadow">
-          <span className="font-heading text-xs tracking-widest uppercase text-muted-foreground">
+          <span className="font-sans font-semibold text-xs tracking-widest uppercase text-muted-foreground">
             Estado
           </span>
           <StatusBadge status={contract.status} />
           <span className="mx-1 h-5 w-[2px] bg-border" aria-hidden />
-          <span className="font-heading text-xs tracking-widest uppercase text-muted-foreground">
+          <span className="font-sans font-semibold text-xs tracking-widest uppercase text-muted-foreground">
             SLA
           </span>
           <SlaIndicator level={sla} />

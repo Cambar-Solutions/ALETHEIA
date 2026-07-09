@@ -31,7 +31,7 @@ export function ReportFiltersBar({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <label htmlFor="filter-status" className="flex flex-col gap-1.5">
-        <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
+        <span className="font-sans font-semibold text-xs uppercase tracking-widest text-muted-foreground">
           Estado
         </span>
         <Select
@@ -49,7 +49,7 @@ export function ReportFiltersBar({
       </label>
 
       <label htmlFor="filter-area" className="flex flex-col gap-1.5">
-        <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
+        <span className="font-sans font-semibold text-xs uppercase tracking-widest text-muted-foreground">
           Área
         </span>
         <Select
@@ -67,7 +67,7 @@ export function ReportFiltersBar({
       </label>
 
       <label htmlFor="filter-provider" className="flex flex-col gap-1.5">
-        <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
+        <span className="font-sans font-semibold text-xs uppercase tracking-widest text-muted-foreground">
           Tipo de proveedor
         </span>
         <Select

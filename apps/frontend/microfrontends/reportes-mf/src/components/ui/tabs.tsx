@@ -21,10 +21,7 @@ interface TabsProps {
  */
 export function Tabs({ tabs, active, onChange }: TabsProps) {
   return (
-    <div
-      role="tablist"
-      className="inline-flex flex-wrap gap-2 rounded-base border-2 border-border bg-secondary-background p-1 shadow-shadow"
-    >
+    <div role="tablist" className="inline-flex flex-wrap gap-2">
       {tabs.map((tab) => {
         const isActive = tab.id === active;
         return (
@@ -35,10 +32,10 @@ export function Tabs({ tabs, active, onChange }: TabsProps) {
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
             className={cn(
-              'inline-flex items-center gap-2 rounded-base px-4 py-2 text-sm font-heading transition-all [&_svg]:size-4',
+              'inline-flex items-center gap-2 rounded-base border-2 border-border px-4 py-2 text-sm font-sans font-semibold transition-all [&_svg]:size-4',
               isActive
-                ? 'border-2 border-border bg-main text-main-foreground shadow-shadow'
-                : 'border-2 border-transparent text-foreground/70 hover:text-foreground',
+                ? 'bg-main text-main-foreground shadow-shadow'
+                : 'bg-background text-foreground/70 shadow-shadow hover:text-foreground',
             )}
           >
             {tab.icon}

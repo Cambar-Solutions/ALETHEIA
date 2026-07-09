@@ -28,7 +28,7 @@ export function TabsNav({ items }: { items: TabItem[] }) {
             key={item.href}
             href={item.href}
             className={cn(
-              'inline-flex items-center gap-2 rounded-base border-2 border-border px-4 py-2 text-sm font-heading uppercase tracking-wide transition-all',
+              'inline-flex items-center gap-2 rounded-base border-2 border-border px-4 py-2 text-sm font-sans font-semibold uppercase tracking-wide transition-all',
               isActive
                 ? 'bg-main text-main-foreground shadow-shadow'
                 : 'bg-background text-foreground shadow-shadow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none',

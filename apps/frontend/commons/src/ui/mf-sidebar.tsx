@@ -176,7 +176,7 @@ export function MfSidebar({ children }: { children: ReactNode }) {
               {ready ? initial : '…'}
             </div>
             <div className="min-w-0">
-              <p className="truncate text-sm font-heading leading-tight">
+              <p className="truncate text-sm font-sans font-semibold leading-tight">
                 {ready ? roleName || '—' : ''}
               </p>
             </div>
@@ -190,7 +190,7 @@ export function MfSidebar({ children }: { children: ReactNode }) {
             if (!visible.length) return null;
             return (
               <div key={section.group} className="space-y-1">
-                <p className="px-3 pb-1 font-heading text-[10px] uppercase tracking-widest text-foreground/40">
+                <p className="px-3 pb-1 font-heading text-[10px] uppercase tracking-widest text-muted-foreground">
                   {section.group}
                 </p>
                 {visible.map((item) => navLink(item.href, item.label, item.icon))}

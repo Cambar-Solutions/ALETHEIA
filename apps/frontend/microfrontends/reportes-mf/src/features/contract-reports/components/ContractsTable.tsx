@@ -47,7 +47,7 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
         <TableBody>
           {contracts.map((c) => (
             <TableRow key={c.id}>
-              <TableCell className="font-heading">
+              <TableCell className="font-sans">
                 {/* Enlace cross-zone al detalle de la solicitud (recarga completa por diseño). */}
                 <a
                   href={`/solicitudes/${c.id}`}

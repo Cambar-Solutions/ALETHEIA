@@ -20,7 +20,7 @@ export function Field({ label, htmlFor, hint, error, required, children, classNa
     <div className={cn('space-y-1.5', className)}>
       <label
         htmlFor={htmlFor}
-        className="block font-heading text-xs tracking-widest uppercase text-foreground/70"
+        className="block font-sans font-semibold text-xs tracking-widest uppercase text-foreground/70"
       >
         {label}
         {required && (

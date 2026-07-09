@@ -142,7 +142,7 @@ export function ContractListView() {
             {/* Filters */}
             <div className="flex flex-wrap items-end gap-3">
               <div className="min-w-[220px] flex-1">
-                <label className="mb-1 block font-heading text-xs tracking-widest uppercase text-foreground/70">
+                <label className="mb-1 block font-sans font-semibold text-xs tracking-widest uppercase text-foreground/70">
                   Buscar
                 </label>
                 <Input
@@ -153,7 +153,7 @@ export function ContractListView() {
               </div>
 
               <div className="w-44">
-                <label className="mb-1 block font-heading text-xs tracking-widest uppercase text-foreground/70">
+                <label className="mb-1 block font-sans font-semibold text-xs tracking-widest uppercase text-foreground/70">
                   Estado
                 </label>
                 <Select
@@ -171,7 +171,7 @@ export function ContractListView() {
 
               {viewAll && (
                 <div className="w-44">
-                  <label className="mb-1 block font-heading text-xs tracking-widest uppercase text-foreground/70">
+                  <label className="mb-1 block font-sans font-semibold text-xs tracking-widest uppercase text-foreground/70">
                     Área
                   </label>
                   <Select value={filters.area} onChange={(e) => update({ area: e.target.value })}>
@@ -185,7 +185,7 @@ export function ContractListView() {
                 </div>
               )}
 
-              <Button variant="neutral" size="sm" onClick={reset}>
+              <Button variant="neutral" onClick={reset}>
                 Limpiar
               </Button>
             </div>

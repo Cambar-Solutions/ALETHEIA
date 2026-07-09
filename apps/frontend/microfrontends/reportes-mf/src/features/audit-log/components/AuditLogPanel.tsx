@@ -57,7 +57,7 @@ export function AuditLogPanel() {
       </CardHeader>
       <CardContent className="space-y-6">
         <label htmlFor="audit-contract" className="flex max-w-xl flex-col gap-1.5">
-          <span className="font-heading text-xs uppercase tracking-widest text-muted-foreground">
+          <span className="font-sans font-semibold text-xs uppercase tracking-widest text-muted-foreground">
             Contrato
           </span>
           <Select

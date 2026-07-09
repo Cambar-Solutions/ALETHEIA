@@ -25,7 +25,7 @@ export function SlaRow({ contract, onLevel }: SlaRowProps) {
   return (
     <TableRow>
       <TableCell>
-        <Link href={`/timeline?contract=${contract.id}`} className="font-heading hover:underline">
+        <Link href={`/timeline?contract=${contract.id}`} className="font-sans font-semibold hover:underline">
           {contract.folio}
         </Link>
         <span className="block text-xs text-muted-foreground">{contract.provider}</span>

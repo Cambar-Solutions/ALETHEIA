@@ -176,7 +176,7 @@ export function AppSidebar({
               {initial}
             </div>
             <div className="min-w-0">
-              <p className="truncate text-sm font-heading leading-tight">{roleName || role}</p>
+              <p className="truncate text-sm font-sans font-semibold leading-tight">{roleName || role}</p>
               <p className="truncate text-xs leading-tight text-muted-foreground">
                 {email || 'Sesión activa'}
               </p>
@@ -194,7 +194,7 @@ export function AppSidebar({
             if (!visible.length) return null;
             return (
               <div key={section.group}>
-                <p className="mb-1.5 px-3 font-heading text-xs uppercase tracking-[0.14em] text-foreground/35">
+                <p className="mb-1.5 px-3 font-sans font-semibold text-xs uppercase tracking-[0.14em] text-muted-foreground">
                   {section.group}
                 </p>
                 <ul className="space-y-0.5">
@@ -212,7 +212,7 @@ export function AppSidebar({
           <button
             type="button"
             onClick={onLogout}
-            className="flex w-full items-center gap-3 rounded-base px-3 py-2.5 text-sm font-sans text-foreground/60 transition-all hover:bg-secondary-background hover:text-foreground"
+            className="flex w-full items-center gap-3 rounded-base px-3 py-2.5 text-sm font-sans text-muted-foreground transition-all hover:bg-secondary-background hover:text-foreground"
           >
             <LogOut className={ICON} />
             <span>Cerrar sesión</span>
